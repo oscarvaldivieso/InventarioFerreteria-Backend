@@ -19,17 +19,18 @@ namespace Ferreteria.BussinessLogic.Services
         }
 
         #region Departamento
-        public ServiceResult ListDepartamentos()
+        public IEnumerable<tbDepartamentos> ListDepartamentos()
         {
-            var result = new ServiceResult();
+            
             try
             {
                 var list = _departamentoRepository.List();
-                return result.Ok(list);
+                return list;
             }
             catch (Exception ex)
             {
-                return result.Error(ex.Message);
+                IEnumerable<tbDepartamentos> depa = null;
+                return depa;
             }
         }
 
