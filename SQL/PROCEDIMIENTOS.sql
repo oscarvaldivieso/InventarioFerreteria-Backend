@@ -103,9 +103,19 @@ CREATE OR ALTER PROCEDURE Acce.SP_Rol_Eliminar
 	@Role_Id INT	
 AS
 BEGIN
-	UPDATE Acce.tbRoles
-	SET Role_Estado = 0
-	WHERE Role_Id = @Role_Id
+	DECLARE @conteoRol INT = (SELECT COUNT(*) FROM Acce.tbUsuarios WHERE Role_Id = @Role_Id 
+	AND Usua_Estado = 1)
+
+	IF @conteoRol = 0 
+	BEGIN
+		UPDATE Acce.tbRoles
+		SET Role_Estado = 0
+		WHERE Role_Id = @Role_Id
+	END
+	ELSE
+	BEGIN
+		SELECT 'No se puede eliminar el rol, esta siendo utilizado por Usuarios' 
+	END
 END
 GO
 
@@ -265,8 +275,17 @@ CREATE OR ALTER PROCEDURE Gral.SP_Departamento_Eliminar
     @Depa_Codigo				VARCHAR(2)
 AS
 BEGIN
-    DELETE FROM Gral.tbDepartamentos
-    WHERE Depa_Codigo = @Depa_Codigo
+	DECLARE @depaConteo INT = (SELECT * FROM Gral.tbDepartamentos WHERE Depa_Codigo = @Depa_Codigo)
+	
+	IF @depaConteo = 0
+	BEGIN
+	    DELETE FROM Gral.tbDepartamentos
+		WHERE Depa_Codigo = @Depa_Codigo
+	END
+	ELSE
+	BEGIN
+		SELECT 'No se puede eliminar el departamento porque esta siendo utilizado en Municipios'
+	END
 END
 GO
 
@@ -324,8 +343,17 @@ CREATE OR ALTER PROCEDURE Gral.SP_Municipio_Eliminar
     @Muni_Codigo				VARCHAR(4)
 AS
 BEGIN
-    DELETE FROM Gral.tbMunicipios
-    WHERE Muni_Codigo = @Muni_Codigo
+	
+	DECLARE @conteoMunicipios INT = (SELECT * FROM Gral.tbMunicipios WHERE @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Ferr.tbSucursales) AND @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Comp.tbProveedores) AND @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Gral.tbClientes) AND @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Ferr.tbEmpleados) AND Muni_Codigo  = @Muni_Codigo)
+	IF @conteoMunicipios = 0 
+	BEGIN
+		DELETE FROM Gral.tbMunicipios
+		WHERE Muni_Codigo = @Muni_Codigo
+	END
+	ELSE
+	BEGIN 
+		SELECT 'No se puede eliminar el municipio porque esta siendo usado en Clientes, Sucursales, Proveedor y Empleados'
+	END
 END
 GO
 
@@ -374,8 +402,16 @@ CREATE OR ALTER PROCEDURE Gral.SP_EstadoCivil_Eliminar
     @EsCv_Id					INT	
 AS
 BEGIN
-	DELETE FROM Gral.tbEstadosCiviles
-	WHERE EsCv_Id = @EsCv_Id
+	DECLARE @conteoEstadoCivil INT = (SELECT * FROM Gral.tbEstadosCiviles WHERE @EsCv_Id NOT IN (SELECT EsCv_Id FROM Gral.tbClientes) AND @EsCv_Id NOT IN (SELECT EsCv_Id FROM Ferr.tbEmpleados) AND @EsCv_Id  = EsCv_Id)
+	IF @conteoEstadoCivil = 0 
+	BEGIN
+		DELETE FROM Gral.tbEstadosCiviles
+		WHERE EsCv_Id = @EsCv_Id
+	END
+	ELSE
+	BEGIN 
+		SELECT 'No se puede eliminar el estado civil porque esta siendo usado en Clientes y Empleados'
+	END
 END
 GO
 
@@ -400,7 +436,7 @@ BEGIN
 
 	IF @Clie = 0
 	BEGIN
-		INSERT INTO Gral.tbClientes
+		INSERT INTO Gral.tbClientes 
 		(
 			Clie_DNI,
 			Clie_Nombre,
@@ -469,9 +505,19 @@ CREATE OR ALTER PROCEDURE Gral.SP_Cliente_Eliminar
     @Clie_Id					INT
 AS
 BEGIN
-    UPDATE Gral.tbClientes
-    SET Clie_Estado = 0
-    WHERE Clie_Id = @Clie_Id
+	DECLARE @conteoClientes INT = (SELECT * FROM Vent.tbVentas WHERE Clie_Id = @Clie_Id
+	AND Vent_Estado = 1)
+	IF @conteoClientes = 0
+	BEGIN
+		UPDATE Gral.tbClientes
+		SET Clie_Estado = 0
+		WHERE Clie_Id = @Clie_Id
+	END
+	ELSE
+	BEGIN 
+		SELECT 'No se puede eliminar el cliente, esta siendo utilizado por Ventas'
+	END
+    
 END
 GO
 
@@ -602,9 +648,20 @@ CREATE OR ALTER PROCEDURE Gral.SP_Cargos_Eliminar
     @Carg_Id					INT
 AS
 BEGIN
-    UPDATE Ferr.tbCargos
-    SET Carg_Estado = 0
-    WHERE Carg_Id = @Carg_Id
+	DECLARE @conteocargo INT = (SELECT COUNT(*) FROM Ferr.tbEmpleados
+	WHERE Carg_Id = @Carg_Id AND Empl_Estado = 1)
+
+	IF @conteoCargo = 0
+	BEGIN 
+		UPDATE Ferr.tbCargos
+		SET Carg_Estado = 0
+		WHERE Carg_Id = @Carg_Id
+	END
+	ELSE
+	BEGIN
+		SELECT 'No se puede eliminar el cargo, esta siendo utilizado por empleados'
+	END
+    
 END
 GO
 
@@ -677,9 +734,18 @@ CREATE OR ALTER PROCEDURE Ferr.SP_Empleado_Eliminar
 	@Empl_Id					INT
 AS
 BEGIN
-	UPDATE Ferr.tbEmpleados
-	SET Empl_Estado = 0
-	WHERE Empl_Id = @Empl_Id
+	DECLARE @conteoEmpleado INT = (SELECT COUNT(*) FROM Acce.tbUsuarios WHERE Empl_Id = @Empl_Id AND Usua_Estado = 1
+	IF @conteoEmpleado = 0
+	BEGIN 
+		UPDATE Ferr.tbEmpleados
+		SET Empl_Estado = 0
+		WHERE Empl_Id = @Empl_Id
+	END
+	ELSE 
+	BEGIN 
+		SELECT 'No se puede eliminar el empleado porque esta siendo utilizado en Usuarios'
+	END
+	
 END
 GO
 
@@ -731,9 +797,17 @@ CREATE OR ALTER PROCEDURE Prod.SP_Marca_Eliminar
 	@Marc_Id					INT
 AS
 BEGIN
-	UPDATE Prod.tbMarcas
-	SET Marc_Estado = 0
-	WHERE Marc_Id = @Marc_Id
+	DECLARE @conteoMarca INT = (SELECT COUNT(*) FROM Prod.tbProductos WHERE Marc_Id = @Marc_Id AND Prod_Estado = 1)
+	IF @conteoMarca = 0
+	BEGIN 
+		UPDATE Prod.tbMarcas
+		SET Marc_Estado = 0
+		WHERE Marc_Id = @Marc_Id
+	END
+	ELSE
+	BEGIN 
+		SELECT 'No se puede eliminar la marca porque esta siendo utilizada por Productos'
+	END
 END
 GO
 
@@ -784,9 +858,17 @@ CREATE OR ALTER PROCEDURE Prod.SP_Categoria_Eliminar
 	@Cate_Id					INT
 AS
 BEGIN
-	UPDATE Prod.tbCategorias
-	SET Cate_Estado = 0
-	WHERE Cate_Id = @Cate_Id
+	DECLARE @conteoCategoria INT = (SELECT COUNT(*) FROM Prod.tbProductos WHERE Cate_Id = @Cate_Id AND Prod_Estado = 1)
+	IF @conteoCategoria = 0
+	BEGIN
+		UPDATE Prod.tbCategorias
+		SET Cate_Estado = 0
+		WHERE Cate_Id = @Cate_Id
+	END
+	ELSE
+	BEGIN
+		SELECT 'No se puede eliminar la categoria porque esta siendo utilizada en productos'
+	END
 END
 GO
 
@@ -846,9 +928,18 @@ CREATE OR ALTER PROCEDURE Comp.SP_Proveedor_Eliminar
 	@Prov_Id					INT
 AS
 BEGIN
-	UPDATE Comp.tbProveedores
-	SET Prov_Estado = 0 
-	WHERE Prov_Id = @Prov_Id
+	DECLARE @conteoProveedor INT = (SELECT * FROM Comp.tbProveedores WHERE @Prov_Id NOT IN (SELECT Prov_Id FROM Prod.tbProductos) AND @Prov_Id NOT IN (SELECT Prov_Id FROM Comp.tbCompras) AND Prov_Id = @Prov_Id)
+	IF @conteoProveedor = 0
+	BEGIN 
+
+		UPDATE Comp.tbProveedores
+		SET Prov_Estado = 0 
+		WHERE Prov_Id = @Prov_Id
+	END
+	ELSE 
+	BEGIN 
+		SELECT 'No se puede eliminar el proveedor porque esta siendo utilizado en Productos y Compras'
+	END
 END
 GO
 
@@ -915,9 +1006,17 @@ CREATE OR ALTER PROCEDURE Prod.SP_Producto_Eliminar
 	@Prod_Id					INT
 AS
 BEGIN
-	UPDATE Prod.tbProductos
-	SET Prod_Estado = 0
-	WHERE Prod_Id = @Prod_Id
+	DECLARE @conteoProducto INT = (SELECT * FROM Prod.tbProductos WHERE @Prod_Id NOT IN (SELECT Prod_Id FROM Comp.tbComprasDetalles) AND @Prod_Id NOT IN (SELECT Prov_Id FROM Vent.tbVentasDetalles) AND Prod_Id = @Prod_Id)
+	IF @conteoProducto = 0
+	BEGIN 
+		UPDATE Prod.tbProductos
+		SET Prod_Estado = 0
+		WHERE Prod_Id = @Prod_Id
+	END
+	ELSE
+	BEGIN 
+		SELECT 'No se puede eliminar el producto porque esta siendo utilizado en Compras y Ventas'
+	END
 END
 GO
 
