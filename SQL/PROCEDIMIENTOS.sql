@@ -584,7 +584,7 @@ END
 GO
 
 
-CREATE OR ALTER PROCEDURE Gral.SP_Sucursales_Eliminar
+CREATE OR ALTER PROCEDURE Ferr.SP_Sucursal_Eliminar
     @Sucu_Id					INT
 AS
 BEGIN
@@ -600,7 +600,7 @@ GO
 --PROCEDIMIENTOS ALMACENADOS CARGOS
 
 
-CREATE OR ALTER PROCEDURE Gral.SP_Cargo_Insertar
+CREATE OR ALTER PROCEDURE Ferr.SP_Cargo_Insertar
     @Carg_Descripcion		VARCHAR(20),
     @Usua_Creacion			INT,
     @Feca_Creacion			DATETIME,
@@ -626,7 +626,7 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE Gral.SP_Cargo_Actualizar
+CREATE OR ALTER PROCEDURE Ferr.SP_Cargo_Actualizar
     @Carg_Id					INT,
     @Carg_Descripcion		VARCHAR(100),
     @Usua_Modificacion		INT,
@@ -642,7 +642,7 @@ END
 GO
 
 
-CREATE OR ALTER PROCEDURE Gral.SP_Cargos_Eliminar
+CREATE OR ALTER PROCEDURE Ferr.SP_Cargo_Eliminar
     @Carg_Id					INT
 AS
 BEGIN
@@ -659,7 +659,6 @@ BEGIN
 	BEGIN
 		SELECT 'No se puede eliminar el cargo, esta siendo utilizado por empleados'
 	END
-    
 END
 GO
 
@@ -1159,5 +1158,72 @@ BEGIN
 	UPDATE Vent.tbVentasDetalles
 	SET VtDe_Estado = 0
 	WHERE VtDe_Id = @VtDe_Id
+END
+GO
+
+--TABLA 20--
+--MEDIDAS--
+CREATE OR ALTER PROCEDURE Prod.SP_Medida_Insertar
+	@Medi_Descripcion			VARCHAR(20),
+	@Usua_Creacion				INT,
+	@Feca_Creacion				DATETIME,
+	@Usua_Modificacion			INT,
+	@Feca_Modificacion			DATETIME
+AS
+BEGIN
+	DECLARE @Medi INT = (SELECT COUNT(*) FROM Prod.tbMedidas WHERE Medi_Descripcion = @Medi_Descripcion)
+
+	IF @Medi = 0
+	BEGIN
+		INSERT INTO Prod.tbMedidas (Medi_Descripcion, Usua_Creacion, Feca_Creacion)
+		VALUES (@Medi_Descripcion, @Usua_Creacion, @Feca_Creacion)
+	END
+	ELSE
+	BEGIN
+		UPDATE Prod.tbMedidas
+		SET Medi_Estado = 1,
+			Usua_Modificacion = @Usua_Modificacion,
+			Feca_Modificacion = @Feca_Modificacion
+		WHERE Medi_Descripcion = @Medi_Descripcion
+	END
+END
+GO
+
+ALTER TABLE Prod.tbMedidas
+ADD Medi_Estado			BIT DEFAULT 1
+GO
+
+CREATE OR ALTER PROCEDURE Prod.SP_Medida_Actualizar
+	@Medi_Id					INT,
+	@Medi_Descripcion			VARCHAR(20),
+	@Usua_Modificacion			INT,
+	@Feca_Modificacion			DATETIME
+AS
+BEGIN
+	UPDATE Prod.tbMedidas
+	SET Medi_Descripcion = @Medi_Descripcion,
+		Usua_Modificacion = @Usua_Modificacion,
+		Feca_Modificacion = @Feca_Modificacion
+	WHERE Medi_Id = @Medi_Id
+END
+GO
+
+CREATE OR ALTER PROCEDURE Prod.SP_Medida_Eliminar
+	@Medi_Id					INT
+AS
+BEGIN
+	DECLARE @Medi INT = (SELECT COUNT(*) FROM Prod.tbMedidas
+	WHERE Medi_Id = @Medi_Id AND Medi_Estado = 1)
+
+	IF @Medi = 0
+	BEGIN 
+		UPDATE Prod.tbMedidas
+		SET Medi_Estado = 0
+		WHERE Medi_Id = @Medi_Id
+	END
+	ELSE
+	BEGIN
+		SELECT 'No se puede eliminar la medida, esta siendo utilizado por productos'
+	END
 END
 GO
