@@ -396,20 +396,29 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE Gral.SP_EstadoCivil_Eliminar
+CREATE OR ALTER PROCEDURE Gral.SP_EstadoCivil_Eliminar 4
     @EsCv_Id					INT	
 AS
 BEGIN
-	DECLARE @conteoEstadoCivil INT = (SELECT COUNT(*) FROM Gral.tbEstadosCiviles WHERE @EsCv_Id NOT IN (SELECT EsCv_Id FROM Gral.tbClientes) AND @EsCv_Id NOT IN (SELECT EsCv_Id FROM Ferr.tbEmpleados) AND @EsCv_Id  = EsCv_Id)
+	DECLARE @conteoEstadoCivil INT = (SELECT COUNT(*) FROM Gral.tbClientes WHERE EsCv_Id = @EsCv_Id AND EsCv_Id NOT IN (SELECT EsCv_Id FROM Ferr.tbEmpleados) AND EsCv_Id  = @EsCv_Id)
 	IF @conteoEstadoCivil = 0 
-	BEGIN
-		DELETE FROM Gral.tbEstadosCiviles
-		WHERE EsCv_Id = @EsCv_Id
-	END
+		BEGIN
+			DELETE FROM Gral.tbEstadosCiviles
+			WHERE EsCv_Id = @EsCv_Id
+		END
 	ELSE
-	BEGIN 
-		SELECT 'No se puede eliminar el estado civil porque esta siendo usado en Clientes y Empleados'
-	END
+		BEGIN 
+			SELECT 'No se puede eliminar el estado civil porque esta siendo usado en Clientes y Empleados'
+		END
+END
+GO
+
+CREATE OR ALTER PROCEDURE Gral.SP_EstadoCivil_Listar
+AS
+BEGIN
+	SELECT EsCv_Id,
+			EsCv_Descripcion
+	FROM Gral.tbEstadosCiviles
 END
 GO
 

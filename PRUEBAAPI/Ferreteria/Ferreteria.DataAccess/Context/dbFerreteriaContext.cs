@@ -139,10 +139,10 @@ public partial class dbFerreteriaContext : DbContext
                 .HasMaxLength(4)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.EsCv).WithMany(p => p.tbClientes)
-                .HasForeignKey(d => d.EsCv_Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Gral_tbClientes_Gral_tbEstadosCiviles_EsCv_Id");
+            //entity.HasOne(d => d.EsCv).WithMany(p => p.tbClientes)
+            //    .HasForeignKey(d => d.EsCv_Id)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_Gral_tbClientes_Gral_tbEstadosCiviles_EsCv_Id");
 
             entity.HasOne(d => d.Muni_CodigoNavigation).WithMany(p => p.tbClientes)
                 .HasForeignKey(d => d.Muni_Codigo)
@@ -278,10 +278,10 @@ public partial class dbFerreteriaContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Ferr_tbEmpleados_Carg_Id_Ferr_tbCargos_Carg_Id");
 
-            entity.HasOne(d => d.EsCv).WithMany(p => p.tbEmpleados)
-                .HasForeignKey(d => d.EsCv_Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Ferr_tbEmpleados_EsCv_Id_Gral_tbEstadosCiviles_EsCv_Id");
+            //entity.HasOne(d => d.EsCv).WithMany(p => p.tbEmpleados)
+            //    .HasForeignKey(d => d.EsCv_Id)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_Ferr_tbEmpleados_EsCv_Id_Gral_tbEstadosCiviles_EsCv_Id");
 
             entity.HasOne(d => d.Muni_CodigoNavigation).WithMany(p => p.tbEmpleados)
                 .HasForeignKey(d => d.Muni_Codigo)
@@ -310,14 +310,14 @@ public partial class dbFerreteriaContext : DbContext
             entity.Property(e => e.Feca_Creacion).HasColumnType("datetime");
             entity.Property(e => e.Feca_Modificacion).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Usua_CreacionNavigation).WithMany(p => p.tbEstadosCivilesUsua_CreacionNavigation)
-                .HasForeignKey(d => d.Usua_Creacion)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Gral_tbEstadosCiviles_Usua_Creacion_Acce_tbUsuarios_Usua_Id");
+            //entity.HasOne(d => d.Usua_CreacionNavigation).WithMany(p => p.tbEstadosCivilesUsua_CreacionNavigation)
+            //    .HasForeignKey(d => d.Usua_Creacion)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_Gral_tbEstadosCiviles_Usua_Creacion_Acce_tbUsuarios_Usua_Id");
 
-            entity.HasOne(d => d.Usua_ModificacionNavigation).WithMany(p => p.tbEstadosCivilesUsua_ModificacionNavigation)
-                .HasForeignKey(d => d.Usua_Modificacion)
-                .HasConstraintName("FK_Gral_tbEstadosCiviles_Usua_Modificacion_Acce_tbUsuarios_Usua_Id");
+            //entity.HasOne(d => d.Usua_ModificacionNavigation).WithMany(p => p.tbEstadosCivilesUsua_ModificacionNavigation)
+            //    .HasForeignKey(d => d.Usua_Modificacion)
+            //    .HasConstraintName("FK_Gral_tbEstadosCiviles_Usua_Modificacion_Acce_tbUsuarios_Usua_Id");
         });
 
         modelBuilder.Entity<tbMarcas>(entity =>

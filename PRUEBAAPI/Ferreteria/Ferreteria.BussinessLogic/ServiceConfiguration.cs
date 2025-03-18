@@ -16,6 +16,8 @@ namespace Ferreteria.BussinessLogic
         public static void DataAccess(this IServiceCollection services, string connectionString)
         {
             services.AddScoped<DepartamentoRepository>();
+            services.AddScoped<EstadoCivilRepository>();
+
             FerreteriaContext.BuildConnectionString(connectionString);
         }
         public static void BusinessLogic(this IServiceCollection services)

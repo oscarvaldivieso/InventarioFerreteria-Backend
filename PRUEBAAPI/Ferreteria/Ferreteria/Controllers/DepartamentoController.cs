@@ -29,5 +29,19 @@ namespace Ferreteria.Controllers
             var insert = _generalServices.InsertDepartamento(item);
             return Ok(insert);
         }
+
+        [HttpPut("ActualizarDepartamento")]
+        public IActionResult Update([FromBody] tbDepartamentos item)
+        {
+            var update = _generalServices.UpdateDepartamento(item);
+            return Ok(update);
+        }
+
+        [HttpDelete("EliminarDepartamento")]
+        public IActionResult Delete([FromBody] tbDepartamentos item)
+        {
+            var delete = _generalServices.DeleteDepartamento(item);
+            return Ok(delete);
+        }
     }
 }
