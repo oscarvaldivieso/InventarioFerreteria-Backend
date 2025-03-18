@@ -1,0 +1,8 @@
+workstation id = dbFerreteria.mssql.somee.com;
+packet size = 4096;
+user id = SOLANGRI69_SQLLogin_1;
+pwd = Admin123ñ;
+data source = dbFerreteria.mssql.somee.com;
+persist security info = False;
+initial catalog = dbFerreteria;
+TrustServerCertificate = True
