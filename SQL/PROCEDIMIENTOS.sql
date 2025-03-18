@@ -163,9 +163,7 @@ CREATE OR ALTER PROCEDURE Acce.SP_Pantalla_Eliminar
     @Pant_Id					INT
 AS
 BEGIN
-    UPDATE Acce.tbPantallas
-    SET Pant_Estado = 0
-    WHERE Pant_Id = @Pant_Id
+	DELETE FROM Acce.tbPantallas WHERE Pant_Id = @Pant_Id
 END
 GO
 
@@ -275,7 +273,7 @@ CREATE OR ALTER PROCEDURE Gral.SP_Departamento_Eliminar
     @Depa_Codigo				VARCHAR(2)
 AS
 BEGIN
-	DECLARE @depaConteo INT = (SELECT * FROM Gral.tbDepartamentos WHERE Depa_Codigo = @Depa_Codigo)
+	DECLARE @depaConteo INT = (SELECT COUNT(*) FROM Gral.tbMunicipios WHERE Depa_Codigo = @Depa_Codigo)
 	
 	IF @depaConteo = 0
 	BEGIN
@@ -344,7 +342,7 @@ CREATE OR ALTER PROCEDURE Gral.SP_Municipio_Eliminar
 AS
 BEGIN
 	
-	DECLARE @conteoMunicipios INT = (SELECT * FROM Gral.tbMunicipios WHERE @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Ferr.tbSucursales) AND @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Comp.tbProveedores) AND @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Gral.tbClientes) AND @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Ferr.tbEmpleados) AND Muni_Codigo  = @Muni_Codigo)
+	DECLARE @conteoMunicipios INT = (SELECT COUNT(*) FROM Gral.tbMunicipios WHERE @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Ferr.tbSucursales) AND @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Comp.tbProveedores) AND @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Gral.tbClientes) AND @Muni_Codigo NOT IN (SELECT Muni_Codigo FROM Ferr.tbEmpleados) AND Muni_Codigo  = @Muni_Codigo)
 	IF @conteoMunicipios = 0 
 	BEGIN
 		DELETE FROM Gral.tbMunicipios
@@ -402,7 +400,7 @@ CREATE OR ALTER PROCEDURE Gral.SP_EstadoCivil_Eliminar
     @EsCv_Id					INT	
 AS
 BEGIN
-	DECLARE @conteoEstadoCivil INT = (SELECT * FROM Gral.tbEstadosCiviles WHERE @EsCv_Id NOT IN (SELECT EsCv_Id FROM Gral.tbClientes) AND @EsCv_Id NOT IN (SELECT EsCv_Id FROM Ferr.tbEmpleados) AND @EsCv_Id  = EsCv_Id)
+	DECLARE @conteoEstadoCivil INT = (SELECT COUNT(*) FROM Gral.tbEstadosCiviles WHERE @EsCv_Id NOT IN (SELECT EsCv_Id FROM Gral.tbClientes) AND @EsCv_Id NOT IN (SELECT EsCv_Id FROM Ferr.tbEmpleados) AND @EsCv_Id  = EsCv_Id)
 	IF @conteoEstadoCivil = 0 
 	BEGIN
 		DELETE FROM Gral.tbEstadosCiviles
@@ -505,7 +503,7 @@ CREATE OR ALTER PROCEDURE Gral.SP_Cliente_Eliminar
     @Clie_Id					INT
 AS
 BEGIN
-	DECLARE @conteoClientes INT = (SELECT * FROM Vent.tbVentas WHERE Clie_Id = @Clie_Id
+	DECLARE @conteoClientes INT = (SELECT COUNT(*) FROM Vent.tbVentas WHERE Clie_Id = @Clie_Id
 	AND Vent_Estado = 1)
 	IF @conteoClientes = 0
 	BEGIN
@@ -734,7 +732,7 @@ CREATE OR ALTER PROCEDURE Ferr.SP_Empleado_Eliminar
 	@Empl_Id					INT
 AS
 BEGIN
-	DECLARE @conteoEmpleado INT = (SELECT COUNT(*) FROM Acce.tbUsuarios WHERE Empl_Id = @Empl_Id AND Usua_Estado = 1
+	DECLARE @conteoEmpleado INT = (SELECT COUNT(*) FROM Acce.tbUsuarios WHERE Empl_Id = @Empl_Id AND Usua_Estado = 1)
 	IF @conteoEmpleado = 0
 	BEGIN 
 		UPDATE Ferr.tbEmpleados
@@ -928,7 +926,7 @@ CREATE OR ALTER PROCEDURE Comp.SP_Proveedor_Eliminar
 	@Prov_Id					INT
 AS
 BEGIN
-	DECLARE @conteoProveedor INT = (SELECT * FROM Comp.tbProveedores WHERE @Prov_Id NOT IN (SELECT Prov_Id FROM Prod.tbProductos) AND @Prov_Id NOT IN (SELECT Prov_Id FROM Comp.tbCompras) AND Prov_Id = @Prov_Id)
+	DECLARE @conteoProveedor INT = (SELECT COUNT(*) FROM Comp.tbProveedores WHERE @Prov_Id NOT IN (SELECT Prov_Id FROM Prod.tbProductos) AND @Prov_Id NOT IN (SELECT Prov_Id FROM Comp.tbCompras) AND Prov_Id = @Prov_Id)
 	IF @conteoProveedor = 0
 	BEGIN 
 
@@ -1006,7 +1004,7 @@ CREATE OR ALTER PROCEDURE Prod.SP_Producto_Eliminar
 	@Prod_Id					INT
 AS
 BEGIN
-	DECLARE @conteoProducto INT = (SELECT * FROM Prod.tbProductos WHERE @Prod_Id NOT IN (SELECT Prod_Id FROM Comp.tbComprasDetalles) AND @Prod_Id NOT IN (SELECT Prov_Id FROM Vent.tbVentasDetalles) AND Prod_Id = @Prod_Id)
+	DECLARE @conteoProducto INT = (SELECT COUNT(*) FROM Prod.tbProductos WHERE @Prod_Id NOT IN (SELECT Prod_Id FROM Comp.tbComprasDetalles) AND @Prod_Id NOT IN (SELECT Prov_Id FROM Vent.tbVentasDetalles) AND Prod_Id = @Prod_Id)
 	IF @conteoProducto = 0
 	BEGIN 
 		UPDATE Prod.tbProductos
