@@ -55,7 +55,18 @@ namespace Ferreteria.DataAccess.Repositories
 
         public RequestStatus Update(tbDepartamentos item)
         {
-            throw new NotImplementedException();
+            var parameter = new DynamicParameters();
+            parameter.Add("@Depa_Codigo", item.Depa_Codigo, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameter.Add("@Depa_Descripcion", item.Depa_Descripcion, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameter.Add("@Usua_Modificacion", item.Usua_Modificacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@Feca_Modificacion", item.Feca_Modificacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Execute(ScriptsDataBase.Departamento_Insertar, parameter, commandType: System.Data.CommandType.StoredProcedure);
+
+            string mensaje = (result == 0) ? "Error al insertar" : "Insertado correctamente";
+
+            return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
         }
     }
 }
