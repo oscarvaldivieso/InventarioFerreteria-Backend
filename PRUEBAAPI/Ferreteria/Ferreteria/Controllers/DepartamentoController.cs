@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Ferreteria.BussinessLogic.Services;
+using Ferreteria.Models;
 using FerreteriaEntities.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,25 +31,26 @@ namespace Ferreteria.Controllers
         }
 
         [HttpPost("InsertarDepartamento")]
-        public IActionResult Insert([FromBody] tbDepartamentos item)
+        public IActionResult Insert([FromBody] DepartamentosViewModel item)
         {
             var mapped = _mapper.Map<tbDepartamentos>(item);
-            var insert = _generalServices.InsertDepartamento(item);
+            var insert = _generalServices.InsertDepartamento(mapped);
             return Ok(insert);
         }
 
         [HttpPut("ActualizarDepartamento")]
-        public IActionResult Update([FromBody] tbDepartamentos item)
+        public IActionResult Update([FromBody] DepartamentosViewModel item)
         {
             var mapped = _mapper.Map<tbDepartamentos>(item);
-            var update = _generalServices.UpdateDepartamento(item);
+            var update = _generalServices.UpdateDepartamento(mapped);
             return Ok(update);
         }
 
         [HttpDelete("EliminarDepartamento")]
-        public IActionResult Delete([FromBody] tbDepartamentos item)
+        public IActionResult Delete([FromBody] DepartamentosViewModel item)
         {
-            var delete = _generalServices.DeleteDepartamento(item);
+            var mapped = _mapper.Map<tbDepartamentos>(item);
+            var delete = _generalServices.DeleteDepartamento(mapped);
             return Ok(delete);
         }
     }

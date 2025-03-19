@@ -9,6 +9,8 @@ namespace Ferreteria.Extensions
         public MappingProfileExtensions()
         {
             CreateMap<tbDepartamentos, DepartamentosViewModel>().ReverseMap();
+            CreateMap<tbEstadosCiviles, EstadosCivilesViewModel>().ReverseMap();
+            CreateMap<tbMunicipios, MunicipiosViewModel>().ReverseMap();
         }
     }
 }

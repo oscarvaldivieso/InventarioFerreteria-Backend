@@ -17,9 +17,11 @@ namespace Ferreteria.BussinessLogic
         {
             services.AddScoped<DepartamentoRepository>();
             services.AddScoped<EstadoCivilRepository>();
+            services.AddScoped<MunicipioRepository>();
 
             FerreteriaContext.BuildConnectionString(connectionString);
         }
+
         public static void BusinessLogic(this IServiceCollection services)
         {
             services.AddScoped<GeneralServices>();

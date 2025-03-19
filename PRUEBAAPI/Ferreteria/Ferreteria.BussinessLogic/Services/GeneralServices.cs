@@ -9,21 +9,25 @@ using System.Threading.Tasks;
 
 namespace Ferreteria.BussinessLogic.Services
 {
-
     public class GeneralServices
     {
         private readonly DepartamentoRepository _departamentoRepository;
         private readonly EstadoCivilRepository _estadoCivilRepository;
-        public GeneralServices(DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository)
+        private readonly MunicipioRepository _municipioRepository;
+
+        public readonly GeneralServices(DepartamentoRepository departamentoRepository,
+                                EstadoCivilRepository estadoCivilRepository,
+                                MunicipioRepository municipioRepository)
         {
             _departamentoRepository = departamentoRepository;
             _estadoCivilRepository = estadoCivilRepository;
+            _municipioRepository = municipioRepository;
         }
 
         #region Departamento
+
         public IEnumerable<tbDepartamentos> ListDepartamentos()
         {
-            
             try
             {
                 var list = _departamentoRepository.List();
@@ -77,12 +81,11 @@ namespace Ferreteria.BussinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
-        #endregion
 
-     
-   
+        #endregion Departamento
 
         #region EstadoCivil
+
         public ServiceResult ListEstadoCivil()
         {
             var result = new ServiceResult();
@@ -138,6 +141,67 @@ namespace Ferreteria.BussinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
-        #endregion
+
+        #endregion EstadoCivil
+
+        #region Municipio
+
+        public ServiceResult ListMunicipio()
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _municipioRepository.List();
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult InsertMunicipio(tbMunicipios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insert = _municipioRepository.Insert(item);
+                return result.Ok(insert);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateMunicipio(tbMunicipios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var update = _municipioRepository.Update(item);
+                return result.Ok(update);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteMunicipio(tbMunicipios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var delete = _municipioRepository.Delete(item);
+                return result.Ok(delete);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion Municipio
     }
 }
