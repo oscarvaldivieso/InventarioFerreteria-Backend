@@ -46,7 +46,7 @@ namespace Ferreteria.Controllers
             return Ok(update);
         }
 
-        [HttpDelete("EliminarDepartamento")]
+        [HttpPost("EliminarDepartamento")]
         public IActionResult Delete([FromBody] DepartamentosViewModel item)
         {
             var mapped = _mapper.Map<tbDepartamentos>(item);
