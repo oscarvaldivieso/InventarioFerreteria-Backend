@@ -22,7 +22,7 @@ namespace Ferreteria.Controllers
             return View();
         }
 
-        [HttpGet("ListarDepartamento")]
+        [HttpGet("ListarDepartamentos")]
         public IActionResult List()
         {
             var list = _generalServices.ListDepartamentos();

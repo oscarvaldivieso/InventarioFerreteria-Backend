@@ -14,15 +14,22 @@ namespace Ferreteria.BussinessLogic.Services
         private readonly DepartamentoRepository _departamentoRepository;
         private readonly EstadoCivilRepository _estadoCivilRepository;
         private readonly MunicipioRepository _municipioRepository;
+        private readonly ClienteRepository _clienteRepository;
 
-        public readonly GeneralServices(DepartamentoRepository departamentoRepository,
-                                EstadoCivilRepository estadoCivilRepository,
-                                MunicipioRepository municipioRepository)
+        public GeneralServices(DepartamentoRepository departamentoRepository, EstadoCivilRepository estadoCivilRepository, MunicipioRepository municipioRepository, ClienteRepository clienteRepository)
         {
             _departamentoRepository = departamentoRepository;
             _estadoCivilRepository = estadoCivilRepository;
             _municipioRepository = municipioRepository;
+            _clienteRepository = clienteRepository;
         }
+        //public readonly GeneralServices(DepartamentoRepository departamentoRepository,EstadoCivilRepository estadoCivilRepository,MunicipioRepository municipioRepository,ClienteRepository clienteRepository)
+        //{
+        //    _departamentoRepository = departamentoRepository;
+        //    _estadoCivilRepository = estadoCivilRepository;
+        //    _municipioRepository = municipioRepository;
+        //    _clienteRepository = clienteRepository;
+        //}
 
         #region Departamento
 
@@ -86,17 +93,17 @@ namespace Ferreteria.BussinessLogic.Services
 
         #region EstadoCivil
 
-        public ServiceResult ListEstadoCivil()
+        public IEnumerable<tbEstadosCiviles> ListEstadosCiviles()
         {
-            var result = new ServiceResult();
             try
             {
                 var list = _estadoCivilRepository.List();
-                return result.Ok(list);
+                return list;
             }
             catch (Exception ex)
             {
-                return result.Error(ex.Message);
+                IEnumerable<tbEstadosCiviles> escv = null;
+                return escv;
             }
         }
 
@@ -146,17 +153,17 @@ namespace Ferreteria.BussinessLogic.Services
 
         #region Municipio
 
-        public ServiceResult ListMunicipio()
+        public IEnumerable<tbMunicipios> ListMunicipios()
         {
-            var result = new ServiceResult();
             try
             {
                 var list = _municipioRepository.List();
-                return result.Ok(list);
+                return list;
             }
             catch (Exception ex)
             {
-                return result.Error(ex.Message);
+                IEnumerable<tbMunicipios> muni = null;
+                return muni;
             }
         }
 
@@ -203,5 +210,64 @@ namespace Ferreteria.BussinessLogic.Services
         }
 
         #endregion Municipio
+
+        #region Cliente
+        public ServiceResult ListCliente()
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _clienteRepository.List();
+                return result.Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult InsertCliente(tbClientes item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insert = _clienteRepository.Insert(item);
+                return result.Ok(insert);
+
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateCliente(tbClientes item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var update = _clienteRepository.Update(item);
+                return result.Ok(update);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteCliente(tbClientes item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var delete = _clienteRepository.Delete(item);
+                return result.Ok(delete);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        #endregion Cliente
     }
 }
