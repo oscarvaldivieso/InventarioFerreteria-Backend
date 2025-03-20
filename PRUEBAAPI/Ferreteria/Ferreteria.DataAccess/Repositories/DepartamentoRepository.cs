@@ -22,10 +22,16 @@ namespace Ferreteria.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<tbDepartamentos> FindCodigo(string? item)
+        public IEnumerable<tbDepartamentos> FindCodigo(tbDepartamentos? item)
         {
+            var parameter = new DynamicParameters();
+            parameter.Add("@Depa_Codigo", item.Depa_Codigo, System.Data.DbType.String, System.Data.ParameterDirection.Input);
 
-            return db.tbDepartamentos.Where(t => t.Depa_Codigo == item).ToList();
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Query<tbDepartamentos>(ScriptsDataBase.Departamento_Buscar, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+
+            return result;
         }
 
         public RequestStatus Insert(tbDepartamentos item)

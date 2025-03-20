@@ -1,4 +1,6 @@
-﻿namespace Ferreteria.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Ferreteria.Models
 {
     public class DepartamentosViewModel
     {
@@ -13,5 +15,8 @@
         public int? Usua_Modificacion { get; set; }
 
         public DateTime? Feca_Modificacion { get; set; }
+
+        
+        
     }
 }
