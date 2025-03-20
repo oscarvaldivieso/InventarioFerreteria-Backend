@@ -23,13 +23,6 @@ namespace Ferreteria.BussinessLogic.Services
             _municipioRepository = municipioRepository;
             _clienteRepository = clienteRepository;
         }
-        //public readonly GeneralServices(DepartamentoRepository departamentoRepository,EstadoCivilRepository estadoCivilRepository,MunicipioRepository municipioRepository,ClienteRepository clienteRepository)
-        //{
-        //    _departamentoRepository = departamentoRepository;
-        //    _estadoCivilRepository = estadoCivilRepository;
-        //    _municipioRepository = municipioRepository;
-        //    _clienteRepository = clienteRepository;
-        //}
 
         #region Departamento
 

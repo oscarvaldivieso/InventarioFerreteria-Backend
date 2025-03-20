@@ -77,7 +77,7 @@ namespace Ferreteria.DataAccess.Repositories
         public RequestStatus Delete(tbClientes item)
         {
             var parameter = new DynamicParameters();
-            parameter.Add("@Clie_DNI", item.Clie_DNI, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameter.Add("@Clie_Id", item.Clie_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
 
             var db = new SqlConnection(FerreteriaContext.ConnectionString);
 
