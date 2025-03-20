@@ -23,6 +23,11 @@ namespace Ferreteria.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
+        public IEnumerable<tbMunicipios> FindCodigo(string? item)
+        {
+            return db.tbMunicipios.Where(t => t.Muni_Codigo == item).ToList();
+        }
+
         public RequestStatus Insert(tbMunicipios item)
         {
             var parameter = new DynamicParameters();

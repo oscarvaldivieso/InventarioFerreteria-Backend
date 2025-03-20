@@ -43,5 +43,14 @@ namespace Ferreteria.DataAccess.Repositories
         public static string Cliente_Eliminar = "Gral.SP_Cliente_Eliminar";
 
         #endregion Clientes
+
+        #region Cargos
+
+        public static string Cargo_Insertar = "Ferr.SP_Cargo_Insertar";
+        public static string Cargo_Listar = "Ferr.SP_Cargo_Listar";
+        public static string Cargo_Actualizar = "Ferr.SP_Cargo_Actualizar";
+        public static string Cargo_Eliminar = "Ferr.SP_Cargo_Eliminar";
+
+        #endregion Cargos
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Ferreteria.BussinessLogic.Services;
+using Ferreteria.Models;
 using FerreteriaEntities.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,6 +52,14 @@ namespace Ferreteria.Controllers
             var mapped = _mapper.Map<tbEstadosCiviles>(item);
             var delete = _generalServices.DeleteEstadoCivil(item);
             return Ok(delete);
+        }
+
+        [HttpPost("BuscarEstadoCivil")]
+        public IActionResult Find([FromBody] EstadosCivilesViewModel item)
+        {
+            var mapped = _mapper.Map<tbEstadosCiviles>(item);
+            var list = _generalServices.BuscarEstadoCivil(mapped);
+            return Ok(list);
         }
     }
 }

@@ -53,5 +53,13 @@ namespace Ferreteria.Controllers
             var delete = _generalServices.DeleteMunicipio(mapped);
             return Ok(delete);
         }
+
+        [HttpPost("BuscarMunicipio")]
+        public IActionResult Find([FromBody] MunicipiosViewModel item)
+        {
+            var mapped = _mapper.Map<tbMunicipios>(item);
+            var list = _generalServices.BuscarMunicipio(mapped);
+            return Ok(list);
+        }
     }
 }
