@@ -53,5 +53,13 @@ namespace Ferreteria.Controllers
             var delete = _generalServices.DeleteDepartamento(mapped);
             return Ok(delete);
         }
+
+        [HttpPost("BuscarDepartamento")]
+        public IActionResult Find([FromBody] DepartamentosViewModel item)
+        {
+            var mapped = _mapper.Map<tbDepartamentos>(item);
+            var list = _generalServices.BuscarDepartamento(mapped);
+            return Ok(list);
+        }
     }
 }

@@ -26,6 +26,23 @@ namespace Ferreteria.BussinessLogic.Services
 
         #region Departamento
 
+        public IEnumerable<tbDepartamentos> BuscarDepartamento(tbDepartamentos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _departamentoRepository.FindCodigo(item.Depa_Codigo);
+                return list;
+            }
+            catch (Exception ex)
+            {
+
+                IEnumerable<tbDepartamentos> depa = null;
+                return depa;
+            }
+        }
+
+
         public IEnumerable<tbDepartamentos> ListDepartamentos()
         {
             try

@@ -22,6 +22,12 @@ namespace Ferreteria.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
+        public IEnumerable<tbDepartamentos> FindCodigo(string? item)
+        {
+
+            return db.tbDepartamentos.Where(t => t.Depa_Codigo == item).ToList();
+        }
+
         public RequestStatus Insert(tbDepartamentos item)
         {
             var parameter = new DynamicParameters();
