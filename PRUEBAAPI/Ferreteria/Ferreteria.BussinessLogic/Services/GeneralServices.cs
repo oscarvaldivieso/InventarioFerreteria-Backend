@@ -31,7 +31,7 @@ namespace Ferreteria.BussinessLogic.Services
             var result = new ServiceResult();
             try
             {
-                var list = _departamentoRepository.FindCodigo(item.Depa_Codigo);
+                var list = _departamentoRepository.FindCodigo(item);
                 return list;
             }
             catch (Exception ex)

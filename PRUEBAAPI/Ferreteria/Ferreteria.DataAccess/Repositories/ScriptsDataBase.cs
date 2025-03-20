@@ -14,6 +14,7 @@ namespace Ferreteria.DataAccess.Repositories
         public static string Departamento_Listar = "Gral.SP_Departamento_Listar";
         public static string Departamento_Actualizar = "Gral.SP_Departamento_Actualizar";
         public static string Departamento_Eliminar = "Gral.SP_Departamento_Eliminar";
+        public static string Departamento_Buscar = "Gral.SP_Departamento_Buscar";
 
         #endregion Departamentos
 
