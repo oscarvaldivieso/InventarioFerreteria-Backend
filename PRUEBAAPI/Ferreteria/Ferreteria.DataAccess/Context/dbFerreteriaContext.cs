@@ -230,14 +230,14 @@ public partial class dbFerreteriaContext : DbContext
             entity.Property(e => e.Feca_Creacion).HasColumnType("datetime");
             entity.Property(e => e.Feca_Modificacion).HasColumnType("datetime");
 
-            //entity.HasOne(d => d.Usua_CreacionNavigation).WithMany(p => p.tbDepartamentosUsua_CreacionNavigation)
-            //    .HasForeignKey(d => d.Usua_Creacion)
-            //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK_Gral_tbDepartamentos_Usua_Creacion_Acce_tbUsuarios_Usua_Id");
+            entity.HasOne(d => d.Usua_CreacionNavigation).WithMany(p => p.tbDepartamentosUsua_CreacionNavigation)
+                .HasForeignKey(d => d.Usua_Creacion)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Gral_tbDepartamentos_Usua_Creacion_Acce_tbUsuarios_Usua_Id");
 
-            //entity.HasOne(d => d.Usua_ModificacionNavigation).WithMany(p => p.tbDepartamentosUsua_ModificacionNavigation)
-            //    .HasForeignKey(d => d.Usua_Modificacion)
-            //    .HasConstraintName("FK_Gral_tbDepartamentos_Usua_Modificacion_Acce_tbUsuarios_Usua_Id");
+            entity.HasOne(d => d.Usua_ModificacionNavigation).WithMany(p => p.tbDepartamentosUsua_ModificacionNavigation)
+                .HasForeignKey(d => d.Usua_Modificacion)
+                .HasConstraintName("FK_Gral_tbDepartamentos_Usua_Modificacion_Acce_tbUsuarios_Usua_Id");
         });
 
         modelBuilder.Entity<tbEmpleados>(entity =>
