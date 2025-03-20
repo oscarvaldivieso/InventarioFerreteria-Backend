@@ -18,6 +18,7 @@ namespace Ferreteria.BussinessLogic
             services.AddScoped<DepartamentoRepository>();
             services.AddScoped<EstadoCivilRepository>();
             services.AddScoped<MunicipioRepository>();
+            services.AddScoped<ClienteRepository>();
 
             FerreteriaContext.BuildConnectionString(connectionString);
         }

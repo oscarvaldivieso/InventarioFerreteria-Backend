@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Ferreteria.BussinessLogic.Services;
+using Ferreteria.Models;
+using FerreteriaEntities.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ferreteria.Controllers
@@ -28,7 +30,7 @@ namespace Ferreteria.Controllers
         }
 
         [HttpPost("InsertarCliente")]
-        public IActionResult Insert([FromBody] ClienteViewModel item)
+        public IActionResult Insert([FromBody] ClientesViewModel item)
         {
             var mapped = _mapper.Map<tbClientes>(item);
             var insert = _generalServices.InsertCliente(mapped);
@@ -36,7 +38,7 @@ namespace Ferreteria.Controllers
         }
 
         [HttpPut("ActualizarCliente")]
-        public IActionResult Update([FromBody] ClienteViewModel item)
+        public IActionResult Update([FromBody] ClientesViewModel item)
         {
             var mapped = _mapper.Map<tbClientes>(item);
             var update = _generalServices.UpdateCliente(mapped);
@@ -44,7 +46,7 @@ namespace Ferreteria.Controllers
         }
 
         [HttpDelete("EliminarCliente")]
-        public IActionResult Delete([FromBody] ClienteViewModel item)
+        public IActionResult Delete([FromBody] ClientesViewModel item)
         {
             var mapped = _mapper.Map<tbClientes>(item);
             var delete = _generalServices.DeleteCliente(mapped);

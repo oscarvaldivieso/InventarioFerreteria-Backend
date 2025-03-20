@@ -22,10 +22,11 @@ namespace Ferreteria.Controllers
             return View();
         }
 
-        [HttpGet("ListarMunicipio")]
+        [HttpGet("ListarMunicipios")]
         public IActionResult List()
         {
-            var list = _generalServices.ListMunicipio();
+            var list = _generalServices.ListMunicipios();
+            list = _mapper.Map<IEnumerable<tbMunicipios>>(list);
             return Ok(list);
         }
 

@@ -21,10 +21,11 @@ namespace Ferreteria.Controllers
             return View();
         }
 
-        [HttpGet("ListarEstadoCivil")]
+        [HttpGet("ListarEstadosCiviles")]
         public IActionResult List()
         {
-            var list = _generalServices.ListEstadoCivil();
+            var list = _generalServices.ListEstadosCiviles();
+            list = _mapper.Map<IEnumerable<tbEstadosCiviles>>(list);
             return Ok(list);
         }
 
