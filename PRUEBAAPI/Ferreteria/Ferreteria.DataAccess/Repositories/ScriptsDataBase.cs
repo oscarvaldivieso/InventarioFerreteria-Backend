@@ -44,5 +44,9 @@ namespace Ferreteria.DataAccess.Repositories
         public static string Cliente_Eliminar = "Gral.SP_Cliente_Eliminar";
 
         #endregion Clientes
+
+        #region Usuarios
+        public static string IniciarSesion = "Acce.SP_Usuarios_InicioSesion";
+        #endregion
     }
 }

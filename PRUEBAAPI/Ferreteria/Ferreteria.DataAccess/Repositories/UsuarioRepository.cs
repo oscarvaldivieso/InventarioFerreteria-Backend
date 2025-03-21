@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Ferreteria.Entities.Entities;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace Ferreteria.DataAccess.Repositories
             _connectionString = connectionString;
         }
 
-        public async Task<UsuarioLoginResponse> IniciarSesion(string usuario, string contrasena)
+        // Método para iniciar sesión
+        public async Task<UsuarioLoginResponse?> IniciarSesion(string usuario, string contrasena)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -28,8 +30,9 @@ namespace Ferreteria.DataAccess.Repositories
                     contrasena
                 };
 
+                // Ejecuta el procedimiento almacenado y devuelve el resultado
                 return await connection.QueryFirstOrDefaultAsync<UsuarioLoginResponse>(
-                    "Acce.SP_Usuarios_InicioSesion",
+                    ScriptsDataBase.IniciarSesion, // El nombre del procedimiento almacenado
                     parametros,
                     commandType: CommandType.StoredProcedure
                 );
