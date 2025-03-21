@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Ferreteria.BussinessLogic.Services;
+using Ferreteria.Models;
 using FerreteriaEntities.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,27 +31,35 @@ namespace Ferreteria.Controllers
         }
 
         [HttpPost("InsertarEstadoCivil")]
-        public IActionResult Insert([FromBody] tbEstadosCiviles item)
+        public IActionResult Insert([FromBody] EstadosCivilesViewModel item)
         {
             var mapped = _mapper.Map<tbEstadosCiviles>(item);
-            var insert = _generalServices.InsertEstadoCivil(item);
+            var insert = _generalServices.InsertEstadoCivil(mapped);
             return Ok(insert);
         }
 
         [HttpPut("ActualizarEstadoCivil")]
-        public IActionResult Update([FromBody] tbEstadosCiviles item)
+        public IActionResult Update([FromBody] EstadosCivilesViewModel item)
         {
             var mapped = _mapper.Map<tbEstadosCiviles>(item);
-            var update = _generalServices.UpdateEstadoCivil(item);
+            var update = _generalServices.UpdateEstadoCivil(mapped);
             return Ok(update);
         }
 
         [HttpDelete("EliminarEstadoCivil")]
-        public IActionResult Delete([FromBody] tbEstadosCiviles item)
+        public IActionResult Delete([FromBody] EstadosCivilesViewModel item)
         {
             var mapped = _mapper.Map<tbEstadosCiviles>(item);
-            var delete = _generalServices.DeleteEstadoCivil(item);
+            var delete = _generalServices.DeleteEstadoCivil(mapped);
             return Ok(delete);
+        }
+
+        [HttpPost("BuscarEstadoCivil")]
+        public IActionResult Find([FromBody] EstadosCivilesViewModel item)
+        {
+            var mapped = _mapper.Map<tbEstadosCiviles>(item);
+            var list = _generalServices.BuscarEstadoCivil(mapped);
+            return Ok(list);
         }
     }
 }

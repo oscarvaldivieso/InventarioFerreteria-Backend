@@ -25,7 +25,8 @@ namespace Ferreteria.Controllers
         [HttpGet("ListarCliente")]
         public IActionResult List()
         {
-            var list = _generalServices.ListCliente();
+            var list = _generalServices.ListClientes();
+            list = _mapper.Map<IEnumerable<tbClientes>>(list);
             return Ok(list);
         }
 

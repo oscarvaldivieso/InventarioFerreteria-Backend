@@ -24,6 +24,7 @@ namespace Ferreteria.DataAccess.Repositories
         public static string EstadoCivil_Listar = "Gral.SP_EstadoCivil_Listar";
         public static string EstadoCivil_Actualizar = "Gral.SP_EstadoCivil_Actualizar";
         public static string EstadoCivil_Eliminar = "Gral.SP_EstadoCivil_Eliminar";
+        public static string EstadoCivil_Buscar = "Gral.SP_EstadoCivil_Buscar";
 
         #endregion EstadosCiviles
 
@@ -45,8 +46,44 @@ namespace Ferreteria.DataAccess.Repositories
 
         #endregion Clientes
 
-        #region Usuarios
-        public static string IniciarSesion = "Acce.SP_Usuarios_InicioSesion";
-        #endregion
+        #region Cargos
+
+        public static string Cargo_Insertar = "Ferr.SP_Cargo_Insertar";
+        public static string Cargo_Listar = "Ferr.SP_Cargo_Listar";
+        public static string Cargo_Actualizar = "Ferr.SP_Cargo_Actualizar";
+        public static string Cargo_Eliminar = "Ferr.SP_Cargo_Eliminar";
+        public static string Cargo_Buscar = "Ferr.SP_Cargo_Buscar";
+
+        #endregion Cargos
+
+        #region Categorias
+
+        public static string Categoria_Insertar = "Prod.SP_Categoria_Insertar";
+        public static string Categoria_Listar = "Prod.SP_Categoria_Listar";
+        public static string Categoria_Actualizar = "Prod.SP_Categoria_Actualizar";
+        public static string Categoria_Eliminar = "Prod.SP_Categoria_Eliminar";
+        public static string Categoria_Buscar = "Prod.SP_Categoria_Buscar";
+
+        #endregion Categorias
+
+        #region Marcas
+
+        public static string Marca_Insertar = "Prod.SP_Marca_Insertar";
+        public static string Marca_Listar = "Prod.SP_Marca_Listar";
+        public static string Marca_Actualizar = "Prod.SP_Marca_Actualizar";
+        public static string Marca_Eliminar = "Prod.SP_Marca_Eliminar";
+        public static string Marca_Buscar = "Prod.SP_Marca_Buscar";
+
+        #endregion Marcas
+
+        #region Medidas
+
+        public static string Medida_Insertar = "Prod.SP_Medida_Insertar";
+        public static string Medida_Listar = "Prod.SP_Medida_Listar";
+        public static string Medida_Actualizar = "Prod.SP_Medida_Actualizar";
+        public static string Medida_Eliminar = "Prod.SP_Medida_Eliminar";
+        public static string Medida_Buscar = "Prod.SP_Medida_Buscar";
+
+        #endregion Medidas
     }
 }

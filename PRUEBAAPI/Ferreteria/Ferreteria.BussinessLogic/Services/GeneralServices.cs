@@ -36,12 +36,10 @@ namespace Ferreteria.BussinessLogic.Services
             }
             catch (Exception ex)
             {
-
                 IEnumerable<tbDepartamentos> depa = null;
                 return depa;
             }
         }
-
 
         public IEnumerable<tbDepartamentos> ListDepartamentos()
         {
@@ -103,6 +101,22 @@ namespace Ferreteria.BussinessLogic.Services
 
         #region EstadoCivil
 
+        public IEnumerable<tbEstadosCiviles> BuscarEstadoCivil(tbEstadosCiviles item)
+        {
+            var result = new ServiceResult();
+
+            try
+            {
+                var list = _estadoCivilRepository.FindEsCvId(item);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbEstadosCiviles> escv = null;
+                return escv;
+            }
+        }
+
         public IEnumerable<tbEstadosCiviles> ListEstadosCiviles()
         {
             try
@@ -163,6 +177,21 @@ namespace Ferreteria.BussinessLogic.Services
 
         #region Municipio
 
+        public IEnumerable<tbMunicipios> BuscarMunicipio(tbMunicipios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _municipioRepository.FindCodigo(item.Muni_Codigo);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbMunicipios> muni = null;
+                return muni;
+            }
+        }
+
         public IEnumerable<tbMunicipios> ListMunicipios()
         {
             try
@@ -222,19 +251,20 @@ namespace Ferreteria.BussinessLogic.Services
         #endregion Municipio
 
         #region Cliente
-        public ServiceResult ListCliente()
+        public IEnumerable<tbClientes> ListClientes()
         {
-            var result = new ServiceResult();
             try
             {
                 var list = _clienteRepository.List();
-                return result.Ok(list);
+                return list;
             }
             catch (Exception ex)
             {
-                return result.Error(ex.Message);
+                IEnumerable<tbClientes> clie = null;
+                return clie;
             }
         }
+
 
         public ServiceResult InsertCliente(tbClientes item)
         {
@@ -243,7 +273,6 @@ namespace Ferreteria.BussinessLogic.Services
             {
                 var insert = _clienteRepository.Insert(item);
                 return result.Ok(insert);
-
             }
             catch (Exception ex)
             {
@@ -278,6 +307,7 @@ namespace Ferreteria.BussinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
+
         #endregion Cliente
     }
 }
