@@ -46,7 +46,7 @@ namespace Ferreteria.Controllers
             return Ok(update);
         }
 
-        [HttpDelete("EliminarMarca")]
+        [HttpPost("EliminarMarca")]
         public IActionResult Delete([FromBody] MarcasViewModel item)
         {
             var mapped = _mapper.Map<tbMarcas>(item);

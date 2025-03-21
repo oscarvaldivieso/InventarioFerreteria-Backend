@@ -45,7 +45,7 @@ namespace Ferreteria.Controllers
             return Ok(update);
         }
 
-        [HttpDelete("EliminarCategoria")]
+        [HttpPost("EliminarCategoria")]
         public IActionResult Delete([FromBody] CategoriasViewModel item)
         {
             var mapped = _mapper.Map<tbCategorias>(item);

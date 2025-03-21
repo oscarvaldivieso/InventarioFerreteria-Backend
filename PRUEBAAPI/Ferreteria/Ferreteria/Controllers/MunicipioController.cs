@@ -46,7 +46,7 @@ namespace Ferreteria.Controllers
             return Ok(update);
         }
 
-        [HttpDelete("EliminarMunicipio")]
+        [HttpPost("EliminarMunicipio")]
         public IActionResult Delete([FromBody] MunicipiosViewModel item)
         {
             var mapped = _mapper.Map<tbMunicipios>(item);
