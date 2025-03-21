@@ -21,9 +21,9 @@ public partial class tbMedidas
 
     public bool? Medi_Estado { get; set; }
 
-    public virtual tbUsuarios Usua_CreacionNavigation { get; set; }
+    //public virtual tbUsuarios Usua_CreacionNavigation { get; set; }
 
-    public virtual tbUsuarios Usua_ModificacionNavigation { get; set; }
+    //public virtual tbUsuarios Usua_ModificacionNavigation { get; set; }
 
     public virtual ICollection<tbProductos> tbProductos { get; set; } = new List<tbProductos>();
 }

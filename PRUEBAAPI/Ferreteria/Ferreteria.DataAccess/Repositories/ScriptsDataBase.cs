@@ -8,6 +8,10 @@ namespace Ferreteria.DataAccess.Repositories
 {
     public class ScriptsDataBase
     {
+        #region Usuarios
+        public static string IniciarSesion = "Acce.SP_Usuarios_InicioSesion";
+        #endregion
+
         #region Departamentos
 
         public static string Departamento_Insertar = "Gral.SP_Departamento_Insertar";
