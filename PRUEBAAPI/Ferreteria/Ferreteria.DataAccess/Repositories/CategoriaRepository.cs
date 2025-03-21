@@ -73,6 +73,7 @@ namespace Ferreteria.DataAccess.Repositories
 
             return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
         }
+
         public RequestStatus Delete(tbCategorias item)
         {
             var parameter = new DynamicParameters();

@@ -46,7 +46,7 @@ namespace Ferreteria.Controllers
             return Ok(update);
         }
 
-        [HttpDelete("EliminarCargo")]
+        [HttpPost("EliminarCargo")]
         public IActionResult Delete([FromBody] CargosViewModel item)
         {
             var mapped = _mapper.Map<tbCargos>(item);

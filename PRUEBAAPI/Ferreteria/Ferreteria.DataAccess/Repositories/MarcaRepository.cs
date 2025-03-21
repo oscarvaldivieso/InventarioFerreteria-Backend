@@ -35,7 +35,7 @@ namespace Ferreteria.DataAccess.Repositories
             var parameter = new DynamicParameters();
             parameter.Add("@Marc_Descripcion", item.Marc_Descripcion, System.Data.DbType.String, System.Data.ParameterDirection.Input);
             parameter.Add("@Usua_Creacion", item.Usua_Creacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-            parameter.Add("@Feca_Creacion", item.Feca_Creacion, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameter.Add("@Feca_Creacion", item.Feca_Creacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
 
             using var db = new SqlConnection(FerreteriaContext.ConnectionString);
             var result = db.Execute(ScriptsDataBase.Marca_Insertar, parameter, commandType: System.Data.CommandType.StoredProcedure);
@@ -61,7 +61,7 @@ namespace Ferreteria.DataAccess.Repositories
             parameter.Add("@Marc_Id", item.Marc_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
             parameter.Add("@Marc_Descripcion", item.Marc_Descripcion, System.Data.DbType.String, System.Data.ParameterDirection.Input);
             parameter.Add("@Usua_Modificacion", item.Usua_Modificacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-            parameter.Add("@Feca_Modificacion", item.Feca_Modificacion, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameter.Add("@Feca_Modificacion", item.Feca_Modificacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
 
             using var db = new SqlConnection(FerreteriaContext.ConnectionString);
             var result = db.Execute(ScriptsDataBase.Marca_Actualizar, parameter, commandType: System.Data.CommandType.StoredProcedure);

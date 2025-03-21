@@ -20,7 +20,7 @@ namespace Ferreteria.BussinessLogic.Services
         #region Cargos
 
         public IEnumerable<tbCargos> BuscarCargo(tbCargos item)
-        {
+        {  
             var result = new ServiceResult();
             try
             {
