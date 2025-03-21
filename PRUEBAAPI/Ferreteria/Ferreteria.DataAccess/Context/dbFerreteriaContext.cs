@@ -357,14 +357,14 @@ public partial class dbFerreteriaContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Medi_Estado).HasDefaultValue(true);
 
-            entity.HasOne(d => d.Usua_CreacionNavigation).WithMany(p => p.tbMedidasUsua_CreacionNavigation)
-                .HasForeignKey(d => d.Usua_Creacion)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Prod_tbMedidas_Usua_Creacion_Acce_tbUsuarios_Usua_Id");
+            //entity.HasOne(d => d.Usua_CreacionNavigation).WithMany(p => p.tbMedidasUsua_CreacionNavigation)
+            //    .HasForeignKey(d => d.Usua_Creacion)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_Prod_tbMedidas_Usua_Creacion_Acce_tbUsuarios_Usua_Id");
 
-            entity.HasOne(d => d.Usua_ModificacionNavigation).WithMany(p => p.tbMedidasUsua_ModificacionNavigation)
-                .HasForeignKey(d => d.Usua_Modificacion)
-                .HasConstraintName("FK_Prod_tbMedidas_Usua_Modificacion_Acce_tbUsuarios_Usua_Id");
+            //entity.HasOne(d => d.Usua_ModificacionNavigation).WithMany(p => p.tbMedidasUsua_ModificacionNavigation)
+            //    .HasForeignKey(d => d.Usua_Modificacion)
+            //    .HasConstraintName("FK_Prod_tbMedidas_Usua_Modificacion_Acce_tbUsuarios_Usua_Id");
         });
 
         modelBuilder.Entity<tbMunicipios>(entity =>
