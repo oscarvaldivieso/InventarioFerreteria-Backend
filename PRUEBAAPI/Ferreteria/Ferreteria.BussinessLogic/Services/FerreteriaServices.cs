@@ -24,7 +24,7 @@ namespace Ferreteria.BussinessLogic.Services
             var result = new ServiceResult();
             try
             {
-                var list = _cargoRepository.FindCargId(item.Carg_Id);
+                var list = _cargoRepository.FindCargId(item);
                 return list;
             }
             catch (Exception ex)
@@ -48,12 +48,12 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public ServiceResult InsertDepartamento(tbDepartamentos item)
+        public ServiceResult InsertCargo(tbCargos item)
         {
             var result = new ServiceResult();
             try
             {
-                var insert = _departamentoRepository.Insert(item);
+                var insert = _cargoRepository.Insert(item);
                 return result.Ok(insert);
             }
             catch (Exception ex)
@@ -62,12 +62,12 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public ServiceResult UpdateDepartamento(tbDepartamentos item)
+        public ServiceResult UpdateCargo(tbCargos item)
         {
             var result = new ServiceResult();
             try
             {
-                var update = _departamentoRepository.Update(item);
+                var update = _cargoRepository.Update(item);
                 return result.Ok(update);
             }
             catch (Exception ex)
@@ -76,12 +76,12 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public ServiceResult DeleteDepartamento(tbDepartamentos item)
+        public ServiceResult DeleteCargo(tbCargos item)
         {
             var result = new ServiceResult();
             try
             {
-                var delete = _departamentoRepository.Delete(item);
+                var delete = _cargoRepository.Delete(item);
                 return result.Ok(delete);
             }
             catch (Exception ex)

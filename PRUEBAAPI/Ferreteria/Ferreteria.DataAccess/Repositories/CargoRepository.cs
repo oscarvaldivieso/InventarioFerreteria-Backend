@@ -23,9 +23,15 @@ namespace Ferreteria.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<tbCargos> FindCargId(int? item)
+        public IEnumerable<tbCargos> FindCargId(tbCargos? item)
         {
-            return db.tbCargos.Where(t => t.Carg_Id == item).ToList();
+            var parameter = new DynamicParameters();
+            parameter.Add("@Carg_Id", item.Carg_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Query<tbCargos>(ScriptsDataBase.Cargo_Buscar, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            return result;
         }
 
         public RequestStatus Insert(tbCargos item)

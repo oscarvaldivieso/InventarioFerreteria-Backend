@@ -24,6 +24,7 @@ namespace Ferreteria.DataAccess.Repositories
         public static string EstadoCivil_Listar = "Gral.SP_EstadoCivil_Listar";
         public static string EstadoCivil_Actualizar = "Gral.SP_EstadoCivil_Actualizar";
         public static string EstadoCivil_Eliminar = "Gral.SP_EstadoCivil_Eliminar";
+        public static string EstadoCivil_Buscar = "Gral.SP_EstadoCivil_Buscar";
 
         #endregion EstadosCiviles
 
@@ -51,7 +52,17 @@ namespace Ferreteria.DataAccess.Repositories
         public static string Cargo_Listar = "Ferr.SP_Cargo_Listar";
         public static string Cargo_Actualizar = "Ferr.SP_Cargo_Actualizar";
         public static string Cargo_Eliminar = "Ferr.SP_Cargo_Eliminar";
+        public static string Cargo_Buscar = "Ferr.SP_Cargo_Buscar";
 
         #endregion Cargos
+
+        #region Categorias
+
+        public static string Categoria_Insertar = "Prod.SP_Categoria_Insertar";
+        public static string Categoria_Listar = "Prod.SP_Categoria_Listar";
+        public static string Categoria_Actualizar = "Prod.SP_Categoria_Actualizar";
+        public static string Categoria_Eliminar = "Prod.SP_Categoria_Eliminar";
+
+        #endregion Categorias
     }
 }

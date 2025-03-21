@@ -107,7 +107,7 @@ namespace Ferreteria.BussinessLogic.Services
 
             try
             {
-                var list = _estadoCivilRepository.FindEsCvId(item.EsCv_Id);
+                var list = _estadoCivilRepository.FindEsCvId(item);
                 return list;
             }
             catch (Exception ex)

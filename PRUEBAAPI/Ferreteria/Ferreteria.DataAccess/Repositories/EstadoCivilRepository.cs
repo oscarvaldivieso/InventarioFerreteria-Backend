@@ -24,9 +24,15 @@ namespace Ferreteria.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<tbEstadosCiviles> FindEsCvId(int? item)
+        public IEnumerable<tbEstadosCiviles> FindEsCvId(tbEstadosCiviles? item)
         {
-            return db.tbEstadosCiviles.Where(t => t.EsCv_Id == item).ToList();
+            var parameter = new DynamicParameters();
+            parameter.Add("@EsCv_Id", item.EsCv_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Query<tbEstadosCiviles>(ScriptsDataBase.EstadoCivil_Buscar, parameter, commandType: System.Data.CommandType.StoredProcedure);
+
+            return result;
         }
 
         public RequestStatus Insert(tbEstadosCiviles item)
