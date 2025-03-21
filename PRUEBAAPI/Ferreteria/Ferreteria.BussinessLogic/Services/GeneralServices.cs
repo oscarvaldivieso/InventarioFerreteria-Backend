@@ -251,20 +251,20 @@ namespace Ferreteria.BussinessLogic.Services
         #endregion Municipio
 
         #region Cliente
-
-        public ServiceResult ListCliente()
+        public IEnumerable<tbClientes> ListClientes()
         {
-            var result = new ServiceResult();
             try
             {
                 var list = _clienteRepository.List();
-                return result.Ok(list);
+                return list;
             }
             catch (Exception ex)
             {
-                return result.Error(ex.Message);
+                IEnumerable<tbClientes> clie = null;
+                return clie;
             }
         }
+
 
         public ServiceResult InsertCliente(tbClientes item)
         {

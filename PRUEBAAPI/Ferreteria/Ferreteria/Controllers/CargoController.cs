@@ -25,8 +25,8 @@ namespace Ferreteria.Controllers
         [HttpGet("ListarCargos")]
         public IActionResult List()
         {
-            var result = _ferreteriaServices.ListCargos();
-            var list = _mapper.Map<IEnumerable<tbCargos>>(result);
+            var list = _ferreteriaServices.ListCargos();
+            list = _mapper.Map<IEnumerable<tbCargos>>(list);
             return Ok(list);
         }
 

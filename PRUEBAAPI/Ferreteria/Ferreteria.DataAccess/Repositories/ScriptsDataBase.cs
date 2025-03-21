@@ -62,7 +62,28 @@ namespace Ferreteria.DataAccess.Repositories
         public static string Categoria_Listar = "Prod.SP_Categoria_Listar";
         public static string Categoria_Actualizar = "Prod.SP_Categoria_Actualizar";
         public static string Categoria_Eliminar = "Prod.SP_Categoria_Eliminar";
+        public static string Categoria_Buscar = "Prod.SP_Categoria_Buscar";
 
         #endregion Categorias
+
+        #region Marcas
+
+        public static string Marca_Insertar = "Prod.SP_Marca_Insertar";
+        public static string Marca_Listar = "Prod.SP_Marca_Listar";
+        public static string Marca_Actualizar = "Prod.SP_Marca_Actualizar";
+        public static string Marca_Eliminar = "Prod.SP_Marca_Eliminar";
+        public static string Marca_Buscar = "Prod.SP_Marca_Buscar";
+
+        #endregion Marcas
+
+        #region Medidas
+
+        public static string Medida_Insertar = "Prod.SP_Medida_Insertar";
+        public static string Medida_Listar = "Prod.SP_Medida_Listar";
+        public static string Medida_Actualizar = "Prod.SP_Medida_Actualizar";
+        public static string Medida_Eliminar = "Prod.SP_Medida_Eliminar";
+        public static string Medida_Buscar = "Prod.SP_Medida_Buscar";
+
+        #endregion Medidas
     }
 }
