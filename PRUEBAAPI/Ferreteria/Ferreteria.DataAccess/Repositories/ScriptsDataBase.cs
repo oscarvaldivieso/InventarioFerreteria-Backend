@@ -89,5 +89,15 @@ namespace Ferreteria.DataAccess.Repositories
         public static string Medida_Buscar = "Prod.SP_Medida_Buscar";
 
         #endregion Medidas
+
+        #region Usuarios
+
+        public static string Usuario_Insertar = "Acce.SP_Usuario_Insertar";
+        public static string Usuario_Listar = "Acce.SP_Usuario_Listar";
+        public static string Usuario_Actualizar = "Acce.SP_Usuario_Actualizar";
+        public static string Usuario_Eliminar = "Acce.SP_Usuario_Eliminar";
+        public static string Usuario_Buscar = "Acce.SP_Usuario_Buscar";
+
+        #endregion Usuarios
     }
 }
