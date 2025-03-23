@@ -11,10 +11,14 @@ namespace Ferreteria.BussinessLogic.Services
     public class FerreteriaServices
     {
         private readonly CargoRepository _cargoRepository;
+        private readonly EmpleadoRepository _empleadoRepository;
+        private readonly SucursalRepository _sucursalRepository;
 
-        public FerreteriaServices(CargoRepository cargoRepository)
+        public FerreteriaServices(CargoRepository cargoRepository, EmpleadoRepository empleadoRepository, SucursalRepository sucursalRepository)
         {
             _cargoRepository = cargoRepository;
+            _empleadoRepository = empleadoRepository;
+            _sucursalRepository = sucursalRepository;
         }
 
         #region Cargos
@@ -34,7 +38,7 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public IEnumerable<tbCargos> ListCargos()
+        public IEnumerable<tbCargos> ListCargos() 
         {
             try
             {
@@ -91,5 +95,155 @@ namespace Ferreteria.BussinessLogic.Services
         }
 
         #endregion Cargos
+
+        #region Empleados
+
+        public IEnumerable<tbEmpleados> BuscarEmpleado(tbEmpleados item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _empleadoRepository.FindEmplDNI(item);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbEmpleados> empl = null;
+                return empl;
+            }
+        }
+
+        public IEnumerable<tbEmpleados> ListEmpleados()
+        {
+            try
+            {
+                var list = _empleadoRepository.List();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbEmpleados> empl = null;
+                return empl;
+            }
+        }
+
+        public ServiceResult InsertEmpleado(tbEmpleados item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insert = _empleadoRepository.Insert(item);
+                return result.Ok(insert);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateEmpleado(tbEmpleados item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var update = _empleadoRepository.Update(item);
+                return result.Ok(update);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteEmpleado(tbEmpleados item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var delete = _empleadoRepository.Delete(item);
+                return result.Ok(delete);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion Empleados
+
+        #region Sucursales
+
+        public IEnumerable<tbSucursales> BuscarSucursal(tbSucursales item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _sucursalRepository.FindSucuId(item);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbSucursales> sucu = null;
+                return sucu;
+            }
+        }
+
+        public IEnumerable<tbSucursales> ListSucursales()
+        {
+            try
+            {
+                var list = _sucursalRepository.List();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbSucursales> sucu = null;
+                return sucu;
+            }
+        }
+
+        public ServiceResult InsertSucursak(tbSucursales item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insert = _sucursalRepository.Insert(item);
+                return result.Ok(insert);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateSucursal(tbSucursales item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var update = _sucursalRepository.Update(item);
+                return result.Ok(update);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteSucursal(tbSucursales item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var delete = _sucursalRepository.Delete(item);
+                return result.Ok(delete);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion Sucursales
     }
 }

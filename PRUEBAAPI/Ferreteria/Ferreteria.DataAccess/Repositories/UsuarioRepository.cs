@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace Ferreteria.DataAccess.Repositories
 {
-    public class UsuarioRepository
+    public class UsuarioRepository: IRepository<tbUsuarios>
     {
+        private FerreteriaContext db = new FerreteriaContext();
         private readonly string _connectionString;
 
         public UsuarioRepository(string connectionString)
@@ -39,8 +40,6 @@ namespace Ferreteria.DataAccess.Repositories
                 );
             }
         }
-
-        private FerreteriaContext db = new FerreteriaContext();
 
         public tbUsuarios FindUsua(int? id)
         {

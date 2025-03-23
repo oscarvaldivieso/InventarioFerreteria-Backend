@@ -25,9 +25,5 @@ namespace Ferreteria.Models
         public DateTime? Feca_Modificacion { get; set; }
 
         public bool? Usua_Estado { get; set; }
-
-        public virtual tbEmpleados Empl { get; set; }
-
-        public virtual tbRoles Role { get; set; }
     }
 }

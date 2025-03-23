@@ -46,7 +46,7 @@ namespace Ferreteria.Controllers
             return Ok(update);
         }
 
-        [HttpDelete("EliminarEstadoCivil")]
+        [HttpPost("EliminarEstadoCivil")]
         public IActionResult Delete([FromBody] EstadosCivilesViewModel item)
         {
             var mapped = _mapper.Map<tbEstadosCiviles>(item);

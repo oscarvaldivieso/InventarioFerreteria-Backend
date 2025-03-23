@@ -13,12 +13,14 @@ namespace Ferreteria.BussinessLogic.Services
         private readonly CategoriaRepository _categoriaRepository;
         private readonly MarcaRepository _marcaRepository;
         private readonly MedidaRepository _medidaRepository;
+        private readonly ProductoRepository _productoRepository;
 
-        public ProductoServices(CategoriaRepository categoriaRepository, MarcaRepository marcaRepository, MedidaRepository medidaRepository)
+        public ProductoServices(CategoriaRepository categoriaRepository, MarcaRepository marcaRepository, MedidaRepository medidaRepository, ProductoRepository productoRepository)
         {
             _categoriaRepository = categoriaRepository;
             _marcaRepository = marcaRepository;
             _medidaRepository = medidaRepository;
+            _productoRepository = productoRepository;
         }
 
         #region Categorias
@@ -245,5 +247,80 @@ namespace Ferreteria.BussinessLogic.Services
         }
 
         #endregion Medidas
+
+        #region Productos
+
+        public IEnumerable<tbProductos> BuscarProducto(tbProductos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _productoRepository.FindProdId(item);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbProductos> prod = null;
+                return prod;
+            }
+        }
+
+        public IEnumerable<tbProductos> ListProductos()
+        {
+            try
+            {
+                var list = _productoRepository.List();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbProductos> prod = null;
+                return prod;
+            }
+        }
+
+        public ServiceResult InsertProducto(tbProductos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insert = _productoRepository.Insert(item);
+                return result.Ok(insert);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateProducto(tbProductos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var update = _productoRepository.Update(item);
+                return result.Ok(update);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteProducto(tbProductos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var delete = _productoRepository.Delete(item);
+                return result.Ok(delete);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion Productos
     }
 }

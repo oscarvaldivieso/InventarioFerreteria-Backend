@@ -11,6 +11,7 @@ namespace Ferreteria.DataAccess.Repositories
 {
     public class ClienteRepository : IRepository<tbClientes>
     {
+        private FerreteriaContext db = new FerreteriaContext();
         public tbClientes FindClie(int? id)
         {
             throw new NotImplementedException();
@@ -19,6 +20,17 @@ namespace Ferreteria.DataAccess.Repositories
         public tbClientes Find(int? id)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<tbClientes> FindClieDNI(tbClientes? item)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@Clie_DNI", item.Clie_DNI, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Query<tbClientes>(ScriptsDataBase.Cliente_Buscar, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
+            
+            return result;
         }
 
         public RequestStatus Insert(tbClientes item)

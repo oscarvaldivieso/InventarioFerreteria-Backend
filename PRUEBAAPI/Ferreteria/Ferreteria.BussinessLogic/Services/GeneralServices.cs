@@ -251,6 +251,21 @@ namespace Ferreteria.BussinessLogic.Services
         #endregion Municipio
 
         #region Cliente
+
+        public IEnumerable<tbClientes> BuscarCliente(tbClientes item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _clienteRepository.FindClieDNI(item);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbClientes> clie = null;
+                return clie;
+            }
+        }
         public IEnumerable<tbClientes> ListClientes()
         {
             try
