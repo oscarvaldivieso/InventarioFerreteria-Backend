@@ -140,5 +140,22 @@ namespace Ferreteria.DataAccess.Repositories
         public static string Proveedor_Buscar = "Comp.SP_Proveedor_Buscar";
 
         #endregion Proveedores
+
+        #region Roles
+        public static string Roles_Insertar = "Acce.SP_Rol_Insertar";
+        public static string Roles_Listar = "Acce.SP_Rol_Listar";
+        public static string Roles_Actualizar = "Acce.SP_Rol_Actualizar";
+        public static string Roles_Eliminar = "Acce.SP_Rol_Eliminar";
+        public static string Roles_Buscar = "Acce.SP_Rol_Buscar";
+        #endregion
+
+        #region PantallasPorRol
+        public static string PantallasPorRol_Insertar = "Acce.SP_PantallaPorRol_Insertar";
+        public static string PantallasPorRol_Listar = "Acce.SP_PantallaPorRol_Listar";
+        public static string PantallasPorRol_Actualizar = "Acce.SP_PantallaPorRol_Actualizar";
+        public static string PantallasPorRol_Eliminar = "Acce.SP_PantallaPorRol_Eliminar";
+        public static string PantallasPorRol_Buscar = "Acce.SP_PantallaPorRol_Buscar";
+        #endregion
+
     }
 }
