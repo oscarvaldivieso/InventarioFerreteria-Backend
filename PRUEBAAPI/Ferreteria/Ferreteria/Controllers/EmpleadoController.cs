@@ -22,7 +22,7 @@ namespace Ferreteria.Controllers
             return View();
         }
 
-        [HttpGet("ListarEmpleado")]
+        [HttpGet("ListarEmpleados")]
         public IActionResult List()
         {
             var list = _ferreteriaServices.ListEmpleados();
