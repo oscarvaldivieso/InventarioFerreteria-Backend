@@ -1,64 +1,60 @@
 ﻿using Ferreteria.DataAccess.Repositories;
-using Ferreteria.Entities.Entities;
 using FerreteriaEntities.Entities;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Ferreteria.BussinessLogic.Services
 {
-    public class UsuarioService
+    public class CompraServices
     {
-        private readonly UsuarioRepository _usuarioRepository;
+        private readonly ProveedorRepository _proveedorRepository;
 
-        public UsuarioService(string connectionString)
+        public CompraServices(ProveedorRepository proveedorRepository)
         {
-            _usuarioRepository = new UsuarioRepository(connectionString);
+            _proveedorRepository = proveedorRepository;
         }
 
-        #region Usuarios
-        public async Task<UsuarioLoginResponse> ValidarLogin(string usuario, string contrasena)
-        {
-            return await _usuarioRepository.IniciarSesion(usuario, contrasena);
-        }
+        #region Proveedor
 
-        public IEnumerable<tbUsuarios> BuscarUsuario(tbUsuarios item)
+        public IEnumerable<tbProveedores> BuscarProveedor(tbProveedores item)
         {
             var result = new ServiceResult();
+
             try
             {
-                var list = _usuarioRepository.FindUsuaId(item);
+                var list = _proveedorRepository.FindProvId(item);
                 return list;
             }
             catch (Exception ex)
             {
-                IEnumerable<tbUsuarios> usua = null;
-                return usua;
+                IEnumerable<tbProveedores> prov = null;
+                return prov;
             }
         }
 
-        public IEnumerable<tbUsuarios> ListUsuarios()
+        public IEnumerable<tbProveedores> ListProveedores()
         {
             try
             {
-                var list = _usuarioRepository.List();
+                var list = _proveedorRepository.List();
                 return list;
             }
             catch (Exception ex)
             {
-                IEnumerable<tbUsuarios> usua = null;
-                return usua;
+                IEnumerable<tbProveedores> prov = null;
+                return prov;
             }
         }
 
-        public ServiceResult InsertUsuario(tbUsuarios item)
+        public ServiceResult InsertProveedor(tbProveedores item)
         {
             var result = new ServiceResult();
             try
             {
-                var insert = _usuarioRepository.Insert(item);
+                var insert = _proveedorRepository.Insert(item);
                 return result.Ok(insert);
             }
             catch (Exception ex)
@@ -67,12 +63,12 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public ServiceResult UpdateUsuario(tbUsuarios item)
+        public ServiceResult UpdateProveedor(tbProveedores item)
         {
             var result = new ServiceResult();
             try
             {
-                var update = _usuarioRepository.Update(item);
+                var update = _proveedorRepository.Update(item);
                 return result.Ok(update);
             }
             catch (Exception ex)
@@ -81,12 +77,12 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public ServiceResult DeleteUsuario(tbUsuarios item)
+        public ServiceResult DeleteProveedor(tbProveedores item)
         {
             var result = new ServiceResult();
             try
             {
-                var delete = _usuarioRepository.Delete(item);
+                var delete = _proveedorRepository.Delete(item);
                 return result.Ok(delete);
             }
             catch (Exception ex)
@@ -95,6 +91,6 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        #endregion Usuarios
+        #endregion Proveedor
     }
 }

@@ -2,6 +2,8 @@ using FerreteriaDataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Ferreteria.BussinessLogic;
 using Ferreteria.Extensions;
+using Ferreteria.BussinessLogic.Services;
+using Ferreteria.DataAccess.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,10 @@ var connectionString = builder.Configuration.GetConnectionString("FerreteriaConn
 builder.Services.AddDbContext<dbFerreteriaContext>(option => option.UseSqlServer(connectionString));
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSingleton(connectionString);
+builder.Services.AddScoped<UsuarioRepository>();
+builder.Services.AddScoped<UsuarioService>();
 
 builder.Services.DataAccess(connectionString);
 builder.Services.BusinessLogic();

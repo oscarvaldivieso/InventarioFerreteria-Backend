@@ -23,7 +23,11 @@ namespace Ferreteria.BussinessLogic
             services.AddScoped<CategoriaRepository>();
             services.AddScoped<MarcaRepository>();
             services.AddScoped<MedidaRepository>();
-            services.AddScoped<RolRepository>();
+            services.AddScoped<UsuarioRepository>();
+            services.AddScoped<EmpleadoRepository>();
+            services.AddScoped<SucursalRepository>();
+            services.AddScoped<ProductoRepository>();
+            services.AddScoped<ProveedorRepository>();
 
             FerreteriaContext.BuildConnectionString(connectionString);
         }
@@ -33,7 +37,8 @@ namespace Ferreteria.BussinessLogic
             services.AddScoped<GeneralServices>();
             services.AddScoped<FerreteriaServices>();
             services.AddScoped<ProductoServices>();
-            services.AddScoped<AccesoServices>();
+            services.AddScoped<UsuarioService>();
+            services.AddScoped<CompraServices>();
         }
     }
 }

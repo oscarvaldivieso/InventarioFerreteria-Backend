@@ -46,12 +46,20 @@ namespace Ferreteria.Controllers
             return Ok(update);
         }
 
-        [HttpDelete("EliminarCliente")]
+        [HttpPost("EliminarCliente")]
         public IActionResult Delete([FromBody] ClientesViewModel item)
         {
             var mapped = _mapper.Map<tbClientes>(item);
             var delete = _generalServices.DeleteCliente(mapped);
             return Ok(delete);
+        }
+
+        [HttpPost("BuscarCliente")]
+        public IActionResult Find([FromBody] ClientesViewModel item)
+        {
+            var mapped = _mapper.Map<tbClientes>(item);
+            var find = _generalServices.BuscarCliente(mapped);
+            return Ok(find);
         }
     }
 }

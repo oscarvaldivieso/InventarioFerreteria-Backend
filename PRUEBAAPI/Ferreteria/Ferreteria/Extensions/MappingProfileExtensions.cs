@@ -16,7 +16,11 @@ namespace Ferreteria.Extensions
             CreateMap<tbCategorias, CategoriasViewModel>().ReverseMap();
             CreateMap<tbMarcas, MarcasViewModel>().ReverseMap();
             CreateMap<tbMedidas, MedidasViewModel>().ReverseMap();
-            CreateMap<tbRoles, RolViewModel>().ReverseMap();
+            CreateMap<tbUsuarios, UsuariosViewModel>().ReverseMap();
+            CreateMap<tbEmpleados, EmpleadosViewModel>().ReverseMap();
+            CreateMap<tbSucursales, SucursalesViewModel>().ReverseMap();
+            CreateMap<tbProductos, ProductosViewModel>().ReverseMap();
+            CreateMap<tbProveedores, ProveedoresViewModel>().ReverseMap();
         }
     }
 }
