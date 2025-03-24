@@ -24,43 +24,47 @@ namespace Ferreteria.DataAccess.Repositories
             return result;
         }
 
-        // Insertar un nuevo rol
-        public RequestStatus Insert(tbRoles item)
+        
+
+        public RequestStatus InsertWithScreens(tbRoles item, List<int> pantIds)
         {
-            var parameter = new DynamicParameters();
-            parameter.Add("@Role_Descripcion", item.Role_Descripcion, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-            parameter.Add("@Usua_Creacion", item.Usua_Creacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-            parameter.Add("@Feca_Creacion", item.Feca_Creacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
-
             using var db = new SqlConnection(FerreteriaContext.ConnectionString);
-            var result = db.Execute(ScriptsDataBase.Roles_Insertar, parameter, commandType: System.Data.CommandType.StoredProcedure);
+            db.Open();
+            using var transaction = db.BeginTransaction(); // Inicia la transacción
 
-            string message = result > 0 ? "Rol insertado correctamente" : "Error al insertar el rol";
-            return new RequestStatus { CodeStatus = result, MessageStatus = message };
-        }
-
-        public RequestStatus AssignScreensToRole(int roleId, List<int> pantIds, int usuaCreacion)
-        {
-            var parameter = new DynamicParameters();
-            parameter.Add("@Role_Id", roleId, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-            parameter.Add("@Usua_Creacion", usuaCreacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-            parameter.Add("@Feca_Creacion", DateTime.Now, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
-
-            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
-
-            // Asignar cada pantalla al rol
-            foreach (var pantId in pantIds)
+            try
             {
-                parameter.Add("@Pant_Id", pantId, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-                var result = db.Execute(ScriptsDataBase.PantallasPorRol_Insertar, parameter, commandType: System.Data.CommandType.StoredProcedure);
+                // Insertar el rol y obtener el Role_Id
+                var parameter = new DynamicParameters();
+                parameter.Add("@Role_Descripcion", item.Role_Descripcion, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                parameter.Add("@Usua_Creacion", item.Usua_Creacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                parameter.Add("@Feca_Creacion", item.Feca_Creacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
+                parameter.Add("@Role_Id", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output); // Obtener ID
 
-                if (result == 0)
+                db.Execute(ScriptsDataBase.Roles_Insertar, parameter, transaction, commandType: System.Data.CommandType.StoredProcedure);
+                int roleId = parameter.Get<int>("@Role_Id"); // Obtener el ID generado
+
+                // Insertar las pantallas en la tabla intermedia
+                foreach (var pantId in pantIds)
                 {
-                    return new RequestStatus { CodeStatus = 0, MessageStatus = "Error al asignar alguna pantalla al rol." };
-                }
-            }
+                    var pantParam = new DynamicParameters();
+                    pantParam.Add("@Role_Id", roleId, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                    pantParam.Add("@Pant_Id", pantId, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                    pantParam.Add("@Usua_Creacion", item.Usua_Creacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                    pantParam.Add("@Feca_Creacion", item.Feca_Creacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
 
-            return new RequestStatus { CodeStatus = 1, MessageStatus = "Pantallas asignadas correctamente al rol." };
+                    db.Execute(ScriptsDataBase.PantallasPorRol_Insertar, pantParam, transaction, commandType: System.Data.CommandType.StoredProcedure);
+                }
+
+                transaction.Commit(); // Confirmar la transacción
+
+                return new RequestStatus { CodeStatus = 1, MessageStatus = "Rol y pantallas asignadas correctamente" };
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback(); // Revertir cambios en caso de error
+                return new RequestStatus { CodeStatus = -1, MessageStatus = $"Error: {ex.Message}" };
+            }
         }
 
 
@@ -99,6 +103,11 @@ namespace Ferreteria.DataAccess.Repositories
 
             string message = result > 0 ? "Rol eliminado correctamente" : "Error al eliminar el rol";
             return new RequestStatus { CodeStatus = result, MessageStatus = message };
+        }
+
+        public RequestStatus Insert(tbRoles item)
+        {
+            throw new NotImplementedException();
         }
     }
 

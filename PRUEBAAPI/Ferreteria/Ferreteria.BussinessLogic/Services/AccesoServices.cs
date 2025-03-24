@@ -17,64 +17,63 @@ namespace Ferreteria.BussinessLogic.Services
             _rolRepository = rolRepository;
         }
 
-        #region Roles
-
-        
+        #region Rol
 
         public IEnumerable<tbRoles> ListRoles()
         {
             try
             {
-                var list = _rolRepository.List();
-                return list;
+                return _rolRepository.List();
             }
             catch (Exception ex)
             {
-                IEnumerable<tbRoles> rol = null;
-                return rol;
+                return null;
             }
         }
 
-        // Insertar rol y asignar pantallas
-        public ServiceResult InsertRoleWithScreens(tbRoles role, List<int> pantIds, int usuaCreacion)
+        public ServiceResult InsertRol(tbRoles item, List<int> pantIds)
         {
             var result = new ServiceResult();
             try
             {
-                // Insertar rol
-                var insertResult = _rolRepository.Insert(role);
-                if (!insertResult.IsSuccess)
-                {
-                    return result.Error("Error al insertar el rol.");
-                }
-
-                // Asignar pantallas al rol
-                foreach (var pantId in pantIds)
-                {
-                    var pantAsignResult = _rolRepository.AssignScreensToRole(new tbPantallasPorRol
-                    {
-                        Role_Id = role.Role_Id,
-                        Pant_Id = pantId,
-                        Usua_Creacion = usuaCreacion,
-                        Feca_Creacion = DateTime.Now
-                    });
-
-                    if (!pantAsignResult.IsSuccess)
-                    {
-                        return result.Error($"Error al asignar la pantalla con ID {pantId} al rol.");
-                    }
-                }
-
-                return result.Ok("Rol y pantallas asignadas correctamente.");
+                var insert = _rolRepository.InsertWithScreens(item, pantIds);
+                return result.Ok(insert);
             }
             catch (Exception ex)
             {
-                return result.Error($"Ocurrió un error: {ex.Message}");
+                return result.Error(ex.Message);
             }
         }
 
 
+        public ServiceResult UpdateRol(tbRoles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var update = _rolRepository.Update(item);
+                return result.Ok(update);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
 
-        #endregion Roles
+        public ServiceResult DeleteRol(tbRoles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var delete = _rolRepository.Delete(item);
+                return result.Ok(delete);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion Rol
     }
 }
