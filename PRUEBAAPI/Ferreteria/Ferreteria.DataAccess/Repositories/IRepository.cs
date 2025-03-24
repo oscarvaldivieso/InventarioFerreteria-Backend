@@ -13,5 +13,6 @@ namespace Ferreteria.DataAccess.Repositories
         public RequestStatus Update(T item);
         public T Find(int? id);
         public RequestStatus Delete(T item);
+
     }
 }
