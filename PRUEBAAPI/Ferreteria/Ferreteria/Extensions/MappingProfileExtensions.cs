@@ -23,11 +23,6 @@ namespace Ferreteria.Extensions
             CreateMap<tbProductos, ProductosViewModel>().ReverseMap();
             CreateMap<tbProveedores, ProveedoresViewModel>().ReverseMap();
             CreateMap<tbRoles, RolViewModel>().ReverseMap();
-            CreateMap<RolDetalles, RolDetallesViewModel>()
-            .ForMember(dest => dest.PantIds,
-                       static opt => opt.MapFrom(src => src.PantIds.Split(',').Select(int.Parse).ToList()))
-            .ForMember(dest => dest.PantNombres,
-                       opt => opt.MapFrom(src => string.Join(",", src.PantNombres)));
         }
     }
 }
