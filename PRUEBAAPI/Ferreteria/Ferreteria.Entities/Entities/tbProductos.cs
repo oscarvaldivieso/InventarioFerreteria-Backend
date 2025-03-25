@@ -30,7 +30,7 @@ public partial class tbProductos
 
     public bool? Prod_Estado { get; set; }
 
-    public string Prod_URLImg { get; set; }
+    public string? Prod_URLImg { get; set; }
 
     public int Medi_Id { get; set; }
 
