@@ -1,4 +1,5 @@
 ﻿using FerreteriaEntities.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ferreteria.Models
 {
@@ -12,7 +13,13 @@ namespace Ferreteria.Models
 
         public int Empl_Id { get; set; }
 
+        [NotMapped]
+        public string Empl_NombreCompleto { get; set; }
+
         public int Role_Id { get; set; }
+
+        [NotMapped]
+        public string Role_Descripcion { get; set; }
 
         public bool? Usua_EsAdmin { get; set; }
 
