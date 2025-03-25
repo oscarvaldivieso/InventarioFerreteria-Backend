@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Ferreteria.Entities.Entities;
 using FerreteriaEntities.Entities;
 using Microsoft.Data.SqlClient;
 using System;
@@ -69,43 +70,113 @@ namespace Ferreteria.DataAccess.Repositories
 
 
         // Actualizar un rol
-        public RequestStatus Update(tbRoles item)
+        public RequestStatus UpdateWithScreens(tbRoles item, List<int> pantIds)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@Role_Id", item.Role_Id);
-            parameters.Add("@Role_Descripcion", item.Role_Descripcion);
-            parameters.Add("@Usua_Modificacion", item.Usua_Modificacion);
-            parameters.Add("@Feca_Modificacion", item.Feca_Modificacion);
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            db.Open();
+            using var transaction = db.BeginTransaction(); // Iniciar transacción
 
-            using var dbConnection = new SqlConnection(FerreteriaContext.ConnectionString);
-            var result = dbConnection.Execute("UPDATE tbRoles SET Role_Descripcion = @Role_Descripcion, Usua_Modificacion = @Usua_Modificacion, Feca_Modificacion = @Feca_Modificacion WHERE Role_Id = @Role_Id", parameters);
+            try
+            {
+                // 1️⃣ Actualizar los datos del rol
+                var parameter = new DynamicParameters();
+                parameter.Add("@Role_Id", item.Role_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                parameter.Add("@Role_Descripcion", item.Role_Descripcion, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+                parameter.Add("@Usua_Modificacion", item.Usua_Modificacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                parameter.Add("@Feca_Modificacion", item.Feca_Modificacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
 
-            string message = result > 0 ? "Rol actualizado correctamente" : "Error al actualizar el rol";
-            return new RequestStatus { CodeStatus = result, MessageStatus = message };
+                db.Execute(ScriptsDataBase.Roles_Actualizar, parameter, transaction, commandType: System.Data.CommandType.StoredProcedure);
+
+                // 2️⃣ Eliminar las pantallas actuales asociadas al rol
+                var deleteParam = new DynamicParameters();
+                deleteParam.Add("@Role_Id", item.Role_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                db.Execute(ScriptsDataBase.PantallasPorRol_Eliminar, deleteParam, transaction, commandType: System.Data.CommandType.StoredProcedure);
+
+                // 3️⃣ Insertar las nuevas pantallas asociadas al rol
+                foreach (var pantId in pantIds)
+                {
+                    var pantParam = new DynamicParameters();
+                    pantParam.Add("@Role_Id", item.Role_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                    pantParam.Add("@Pant_Id", pantId, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                    pantParam.Add("@Usua_Creacion", item.Usua_Modificacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                    pantParam.Add("@Feca_Creacion", item.Feca_Modificacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
+
+                    db.Execute(ScriptsDataBase.PantallasPorRol_Insertar, pantParam, transaction, commandType: System.Data.CommandType.StoredProcedure);
+                }
+
+                transaction.Commit(); // Confirmar la transacción
+
+                return new RequestStatus { CodeStatus = 1, MessageStatus = "Rol actualizado correctamente" };
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback(); // Revertir cambios en caso de error
+                return new RequestStatus { CodeStatus = -1, MessageStatus = $"Error: {ex.Message}" };
+            }
         }
 
         // Buscar un rol por ID
-        public tbRoles Find(int? id)
+        public RolDetalles FindRolById(int roleId)
         {
-            using var dbConnection = new SqlConnection(FerreteriaContext.ConnectionString);
-            var result = dbConnection.QueryFirstOrDefault<tbRoles>("SELECT * FROM tbRoles WHERE Role_Id = @Role_Id", new { Role_Id = id });
+            var parameter = new DynamicParameters();
+            parameter.Add("@Role_Id", roleId, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString); // Corrige la conexión
+            var result = db.Query<RolDetalles>(
+                "Acce.SP_Rol_Buscar", // Procedimiento almacenado
+                parameter,
+                commandType: System.Data.CommandType.StoredProcedure
+            ).FirstOrDefault();
+
             return result;
         }
 
         // Eliminar un rol
         public RequestStatus Delete(tbRoles item)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@Role_Id", item.Role_Id);
-
             using var dbConnection = new SqlConnection(FerreteriaContext.ConnectionString);
-            var result = dbConnection.Execute("DELETE FROM tbRoles WHERE Role_Id = @Role_Id", parameters);
+            dbConnection.Open();
+            using var transaction = dbConnection.BeginTransaction(); // Iniciar transacción
 
-            string message = result > 0 ? "Rol eliminado correctamente" : "Error al eliminar el rol";
-            return new RequestStatus { CodeStatus = result, MessageStatus = message };
+            try
+            {
+                // 1️⃣ Eliminar las pantallas asociadas al rol en la tabla intermedia
+                var deletePantallasParam = new DynamicParameters();
+                deletePantallasParam.Add("@Role_Id", item.Role_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                dbConnection.Execute(ScriptsDataBase.PantallasPorRol_Eliminar, deletePantallasParam, transaction, commandType: System.Data.CommandType.StoredProcedure);
+
+                // 2️⃣ Eliminar el rol usando el procedimiento almacenado SP_Rol_Eliminar
+                var deleteRolParam = new DynamicParameters();
+                deleteRolParam.Add("@Role_Id", item.Role_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+                var result = dbConnection.Execute(ScriptsDataBase.Roles_Eliminar, deleteRolParam, transaction, commandType: System.Data.CommandType.StoredProcedure);
+
+                // Confirmar la transacción si ambas eliminaciones fueron exitosas
+                transaction.Commit();
+
+                // Determinar el mensaje de acuerdo al resultado de la eliminación
+                string message = result > 0 ? "Rol y pantallas eliminados correctamente" : "Error al eliminar el rol";
+                return new RequestStatus { CodeStatus = result, MessageStatus = message };
+            }
+            catch (Exception ex)
+            {
+                // En caso de error, revertir la transacción
+                transaction.Rollback();
+                return new RequestStatus { CodeStatus = -1, MessageStatus = $"Error: {ex.Message}" };
+            }
         }
 
+
         public RequestStatus Insert(tbRoles item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RequestStatus Update(tbRoles item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public tbRoles Find(int? id)
         {
             throw new NotImplementedException();
         }

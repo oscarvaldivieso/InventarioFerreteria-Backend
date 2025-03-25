@@ -46,12 +46,12 @@ namespace Ferreteria.BussinessLogic.Services
         }
 
 
-        public ServiceResult UpdateRol(tbRoles item)
+        public ServiceResult UpdateRol(tbRoles item, List<int> pantIds)
         {
             var result = new ServiceResult();
             try
             {
-                var update = _rolRepository.Update(item);
+                var update = _rolRepository.UpdateWithScreens(item, pantIds);
                 return result.Ok(update);
             }
             catch (Exception ex)
@@ -67,6 +67,20 @@ namespace Ferreteria.BussinessLogic.Services
             {
                 var delete = _rolRepository.Delete(item);
                 return result.Ok(delete);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult FindRolById(int roleId)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var rol = _rolRepository.FindRolById(roleId);
+                return result.Ok(rol);
             }
             catch (Exception ex)
             {
