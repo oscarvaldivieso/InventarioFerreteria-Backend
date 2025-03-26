@@ -124,11 +124,11 @@ namespace Ferreteria.DataAccess.Repositories
             return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
         }
 
-        public RequestStatus RestablecerClave(int usuarioId, string nuevaClave)
+        public RequestStatus RestablecerClave(tbUsuarios item)
         {
             var parameter = new DynamicParameters();
-            parameter.Add("@Usua_Id", usuarioId, DbType.Int32, ParameterDirection.Input);
-            parameter.Add("@Usua_Clave", nuevaClave, DbType.String, ParameterDirection.Input);
+            parameter.Add("@Usua_Id", item.Usua_Id, DbType.Int32, ParameterDirection.Input);
+            parameter.Add("@Usua_Clave", item.Usua_Clave, DbType.String, ParameterDirection.Input);
 
             using var db = new SqlConnection(FerreteriaContext.ConnectionString);
             var result = db.Execute(ScriptsDataBase.RestablecerClave, parameter, commandType: CommandType.StoredProcedure);

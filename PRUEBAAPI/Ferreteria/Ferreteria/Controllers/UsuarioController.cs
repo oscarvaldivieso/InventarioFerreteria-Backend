@@ -71,9 +71,10 @@ namespace Ferreteria.Controllers
         }
 
         [HttpPost("RestablecerClave")]
-        public IActionResult RestablecerClave([FromBody] RestablecerClaveViewModel item)
+        public IActionResult RestablecerClave([FromBody] UsuariosViewModel item)
         {
-            var response = _usuarioService.RestablecerClave(item.Usua_Id, item.NuevaClave);
+            var mapped = _mapper.Map<tbUsuarios>(item);
+            var response = _usuarioService.RestablecerClave(mapped);
             return Ok(response);
         }
 
