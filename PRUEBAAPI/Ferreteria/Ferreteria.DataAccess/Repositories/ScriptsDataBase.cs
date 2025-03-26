@@ -131,6 +131,7 @@ namespace Ferreteria.DataAccess.Repositories
         public static string Producto_Actualizar = "Prod.SP_Producto_Actualizar";
         public static string Producto_Eliminar = "Prod.SP_Producto_Eliminar";
         public static string Producto_Buscar = "Prod.SP_Producto_Buscar";
+        public static string Producto_BuscarCate = "Prod.SP_ProductoPorCategoria_Buscar";
 
         #endregion Productos
 

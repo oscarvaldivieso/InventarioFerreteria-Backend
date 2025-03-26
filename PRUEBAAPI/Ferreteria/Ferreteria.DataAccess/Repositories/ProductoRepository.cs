@@ -30,6 +30,18 @@ namespace Ferreteria.DataAccess.Repositories
 
             return result;
         }
+
+        public IEnumerable<tbProductos> FindCate(tbProductos? item)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@Cate_Id", item.Cate_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Query<tbProductos>(ScriptsDataBase.Producto_BuscarCate, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            return result;
+        }
+
         public RequestStatus Insert(tbProductos item)
         {
             var parameter = new DynamicParameters();

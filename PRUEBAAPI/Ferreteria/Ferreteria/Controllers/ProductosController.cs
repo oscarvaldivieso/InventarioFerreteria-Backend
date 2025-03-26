@@ -61,5 +61,13 @@ namespace Ferreteria.Controllers
             var list = _productoServices.BuscarProducto(mapped);
             return Ok(list);
         }
+
+        [HttpPost("ProductoPorCategoria")]
+        public IActionResult FindCate([FromBody] ProductosViewModel item)
+        {
+            var mapped = _mapper.Map<tbProductos>(item);
+            var list = _productoServices.BuscarCategoria(mapped);
+            return Ok(list);
+        }
     }
 }

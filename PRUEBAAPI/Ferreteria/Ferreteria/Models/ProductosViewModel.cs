@@ -1,4 +1,6 @@
-﻿namespace Ferreteria.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Ferreteria.Models
 {
     public class ProductosViewModel
     {
@@ -29,5 +31,17 @@
         public string? Prod_URLImg { get; set; }
 
         public int Medi_Id { get; set; }
+
+        [NotMapped]
+        public string? Medi_Descripcion { get; set; }
+
+        [NotMapped]
+        public string? Cate_Descripcion { get; set; }
+
+        [NotMapped]
+        public string? Prov_Nombre { get; set; }
+
+        [NotMapped]
+        public string? Marc_Descripcion { get; set; }
     }
 }
