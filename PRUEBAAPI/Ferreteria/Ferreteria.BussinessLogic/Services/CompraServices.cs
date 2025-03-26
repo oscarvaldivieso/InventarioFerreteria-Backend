@@ -3,6 +3,7 @@ using FerreteriaEntities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,10 +12,12 @@ namespace Ferreteria.BussinessLogic.Services
     public class CompraServices
     {
         private readonly ProveedorRepository _proveedorRepository;
+        private readonly CompraRepository _compraRepository;
 
-        public CompraServices(ProveedorRepository proveedorRepository)
+        public CompraServices(ProveedorRepository proveedorRepository, CompraRepository compraRepository)
         {
             _proveedorRepository = proveedorRepository;
+            _compraRepository = compraRepository;
         }
 
         #region Proveedor
@@ -92,5 +95,108 @@ namespace Ferreteria.BussinessLogic.Services
         }
 
         #endregion Proveedor
+
+        #region Compras
+
+        public IEnumerable<tbCompras> BuscarCompra(tbCompras item)
+        {
+            var result = new ServiceResult();
+
+            try
+            {
+                var list = _compraRepository.FindCompId(item);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbCompras> comp = null;
+                return comp;
+            }
+        }
+
+        public IEnumerable<tbCompras> ListCompras()
+        {
+            try
+            {
+                var list = _compraRepository.List();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbCompras> comp = null;
+                return comp;
+            }
+        }
+
+        public ServiceResult InsertCompra(tbCompras item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insert = _compraRepository.InsertEncabezado(item);
+                return result.Ok(insert);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult InsertCompraDetalle(tbComprasDetalles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insert = _compraRepository.InsertDetalle(item);
+                return result.Ok(insert);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateCompra(tbCompras item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var update = _compraRepository.UpdateEncabezado(item);
+                return result.Ok(update);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+        public ServiceResult UpdateCompraDetalle(tbComprasDetalles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var update = _compraRepository.UpdateDetalle(item);
+                return result.Ok(update);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteCompra(tbCompras item, tbComprasDetalles cpde)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var delete = _compraRepository.Delete(item, cpde);
+                return result.Ok(delete);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        #endregion Compras
     }
 }

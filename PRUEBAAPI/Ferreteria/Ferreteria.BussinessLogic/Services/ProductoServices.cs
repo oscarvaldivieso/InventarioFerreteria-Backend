@@ -252,6 +252,11 @@ namespace Ferreteria.BussinessLogic.Services
 
         public IEnumerable<tbProductos> BuscarProducto(tbProductos item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item), "Item cannot be null");
+            }
+
             var result = new ServiceResult();
             try
             {

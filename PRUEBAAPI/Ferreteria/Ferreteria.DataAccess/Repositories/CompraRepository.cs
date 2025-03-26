@@ -36,17 +36,35 @@ namespace Ferreteria.DataAccess.Repositories
 
         public RequestStatus Insert(tbCompras item)
         {
+            throw new NotImplementedException();
+        }
+        public IEnumerable<tbCompras> InsertEncabezado(tbCompras? item)
+        {
             var parameter = new DynamicParameters();
             parameter.Add("@Prov_Id", item.Prov_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
             parameter.Add("@Comp_Fecha", item.Comp_Fecha, System.Data.DbType.Date, System.Data.ParameterDirection.Input);
             parameter.Add("@Usua_Creacion", item.Usua_Creacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
             parameter.Add("@Feca_Creacion", item.Feca_Creacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
-            parameter.Add("@Prod_Id", item.);
 
             using var db = new SqlConnection(FerreteriaContext.ConnectionString);
-            var result = db.Execute(ScriptsDataBase.Empleado_Insertar, parameter, commandType: System.Data.CommandType.StoredProcedure);
+            var result = db.Query<tbCompras>(ScriptsDataBase.CompraEncabezado_Insertar, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
-            string mensaje = (result == 0) ? "Error al insertar" : "Insertado correctamente";
+            return result;
+        }
+        public RequestStatus InsertDetalle(tbComprasDetalles cpde)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@Comp_Id", cpde.Comp_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@Prod_Id", cpde.Prod_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@CpDe_Cantidad", cpde.CpDe_Cantidad, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@CpDe_Precio", cpde.CpDe_Precio, System.Data.DbType.Double, System.Data.ParameterDirection.Input);
+            parameter.Add("@Usua_Creacion", cpde.Usua_Creacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@Feca_Creacion", cpde.Feca_Creacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Execute(ScriptsDataBase.CompraDetalle_Insertar, parameter, commandType: System.Data.CommandType.StoredProcedure);
+
+            string mensaje = (result == 0) ? "Error al insertar" : "Insertar correctamente";
 
             return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
         }
@@ -56,43 +74,58 @@ namespace Ferreteria.DataAccess.Repositories
             var parameter = new DynamicParameters();
 
             using var db = new SqlConnection(FerreteriaContext.ConnectionString);
-            var result = db.Query<tbCompras>(ScriptsDataBase.Empleado_Listar, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
+            var result = db.Query<tbCompras>(ScriptsDataBase.Compra_Listar, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
             return result;
         }
 
         public RequestStatus Update(tbCompras item)
         {
+            throw new NotImplementedException();
+        }
+        public IEnumerable<tbCompras> UpdateEncabezado(tbCompras? item)
+        {
             var parameter = new DynamicParameters();
-            parameter.Add("@Empl_Id", item.Empl_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-            parameter.Add("@Empl_DNI", item.Empl_DNI, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-            parameter.Add("@Empl_Nombre", item.Empl_Nombre, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-            parameter.Add("@Empl_Apellido", item.Empl_Apellido, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-            parameter.Add("@Empl_Sexo", item.Empl_Sexo, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-            parameter.Add("@EsCv_Id", item.EsCv_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-            parameter.Add("@Carg_Id", item.Carg_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-            parameter.Add("@Muni_Codigo", item.Muni_Codigo, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-            parameter.Add("@Empl_Direccion", item.Empl_Direccion, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameter.Add("@Comp_Id", item.Comp_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@Prov_Id", item.Prov_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@Comp_Fecha", item.Comp_Fecha, System.Data.DbType.Date, System.Data.ParameterDirection.Input);
             parameter.Add("@Usua_Modificacion", item.Usua_Modificacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
             parameter.Add("@Feca_Modificacion", item.Feca_Modificacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
 
             using var db = new SqlConnection(FerreteriaContext.ConnectionString);
-            var result = db.Execute(ScriptsDataBase.Empleado_Actualizar, parameter, commandType: System.Data.CommandType.StoredProcedure);
+            var result = db.Query<tbCompras>(ScriptsDataBase.CompraEncabezado_Actualizar, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            return result;
+        }
+        public RequestStatus UpdateDetalle(tbComprasDetalles cpde)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@Comp_Id", cpde.Comp_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@Prod_Id", cpde.Prod_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@CpDe_Cantidad", cpde.CpDe_Cantidad, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@CpDe_Precio", cpde.CpDe_Precio, System.Data.DbType.Double, System.Data.ParameterDirection.Input);
+            parameter.Add("@Usua_Modificacion", cpde.Usua_Modificacion, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@Feca_Modificacion", cpde.Feca_Modificacion, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Execute(ScriptsDataBase.CompraDetalle_Actualizar, parameter, commandType: System.Data.CommandType.StoredProcedure);
 
             string mensaje = (result == 0) ? "Error al actualizar" : "Actualizar correctamente";
 
             return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
         }
 
-        public RequestStatus Delete(tbCompras item)
+        public RequestStatus Delete(tbCompras item, tbComprasDetalles cpde)
         {
             var parameter = new DynamicParameters();
-            parameter.Add("@Empl_Id", item.Empl_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@Comp_Id", item.Comp_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@CpDe_Id", cpde.CpDe_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
 
             using var db = new SqlConnection(FerreteriaContext.ConnectionString);
-            var result = db.Execute(ScriptsDataBase.Empleado_Eliminar, parameter, commandType: System.Data.CommandType.StoredProcedure);
+            var result = db.Execute(ScriptsDataBase.Compra_Eliminar, parameter, commandType: System.Data.CommandType.StoredProcedure);
 
-            string mensaje = (result == 0) ? "Error al eliminar" : "Eliminado correctamente";
+            string mensaje = (result == 0) ? "Error al actualizar" : "Actualizar correctamente";
+
             return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
         }
     }

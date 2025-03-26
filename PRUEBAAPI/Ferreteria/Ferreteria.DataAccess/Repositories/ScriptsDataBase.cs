@@ -168,9 +168,11 @@ namespace Ferreteria.DataAccess.Repositories
 
         #region Compras
 
-        public static string Compra_Insertar = "Comp.SP_Compra_Insertar";
+        public static string CompraEncabezado_Insertar = "Comp.SP_CompraEncabezado_Insertar";
+        public static string CompraDetalle_Insertar = "Comp.SP_CompraDetalle_Insertar";
         public static string Compra_Listar = "Comp.SP_Compra_Listar";
-        public static string Compra_Actualizar = "Comp.SP_Compra_Actualizar";
+        public static string CompraEncabezado_Actualizar = "Comp.SP_CompraEncabezado_Actualizar";
+        public static string CompraDetalle_Actualizar = "Comp.SP_CompraDetalle_Actualizar";
         public static string Compra_Eliminar = "Comp.SP_Compra_Eliminar";
         public static string Compra_Buscar = "Comp.SP_Compra_Buscar";
 
