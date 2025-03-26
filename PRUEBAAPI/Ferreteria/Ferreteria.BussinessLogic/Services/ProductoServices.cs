@@ -265,6 +265,21 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
+        public IEnumerable<tbProductos> BuscarCategoria(tbProductos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _productoRepository.FindCate(item);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbProductos> prod = null;
+                return prod;
+            }
+        }
+
         public IEnumerable<tbProductos> ListProductos()
         {
             try
