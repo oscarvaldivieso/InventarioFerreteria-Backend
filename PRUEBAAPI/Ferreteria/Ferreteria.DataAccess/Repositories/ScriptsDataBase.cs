@@ -9,11 +9,12 @@ namespace Ferreteria.DataAccess.Repositories
     public class ScriptsDataBase
     {
         #region Usuarios
+
         public static string IniciarSesion = "Acce.SP_Usuarios_InicioSesion";
         public static string RestablecerClave = "Acce.SP_ReestablecerClave_Actualizar ";
         public static string Usuario_ActivarDesactivar = "Acce.SP_UsuarioActivarDesactivar";
 
-        #endregion
+        #endregion Usuarios
 
         #region Departamentos
 
@@ -146,20 +147,33 @@ namespace Ferreteria.DataAccess.Repositories
         #endregion Proveedores
 
         #region Roles
+
         public static string Roles_Insertar = "Acce.SP_Rol_Insertar";
         public static string Roles_Listar = "Acce.SP_Rol_Listar";
         public static string Roles_Actualizar = "Acce.SP_Rol_Actualizar";
         public static string Roles_Eliminar = "Acce.SP_Rol_Eliminar";
         public static string Roles_Buscar = "Acce.SP_Rol_Buscar";
-        #endregion
+
+        #endregion Roles
 
         #region PantallasPorRol
+
         public static string PantallasPorRol_Insertar = "Acce.SP_PantallaPorRol_Insertar";
         public static string PantallasPorRol_Listar = "Acce.SP_PantallaPorRol_Listar";
         public static string PantallasPorRol_Actualizar = "Acce.SP_PantallaPorRol_Actualizar";
         public static string PantallasPorRol_Eliminar = "Acce.SP_PantallaPorRol_Eliminar";
         public static string PantallasPorRol_Buscar = "Acce.SP_PantallaPorRol_Buscar";
-        #endregion
 
+        #endregion PantallasPorRol
+
+        #region Compras
+
+        public static string Compra_Insertar = "Comp.SP_Compra_Insertar";
+        public static string Compra_Listar = "Comp.SP_Compra_Listar";
+        public static string Compra_Actualizar = "Comp.SP_Compra_Actualizar";
+        public static string Compra_Eliminar = "Comp.SP_Compra_Eliminar";
+        public static string Compra_Buscar = "Comp.SP_Compra_Buscar";
+
+        #endregion Compras
     }
 }
