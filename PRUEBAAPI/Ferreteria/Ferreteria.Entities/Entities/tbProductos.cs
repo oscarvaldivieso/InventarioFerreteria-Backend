@@ -1,6 +1,7 @@
 ﻿#nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FerreteriaEntities.Entities;
 
@@ -45,6 +46,18 @@ public partial class tbProductos
     public virtual tbUsuarios Usua_CreacionNavigation { get; set; }
 
     public virtual tbUsuarios Usua_ModificacionNavigation { get; set; }
+
+    [NotMapped]
+    public string? Medi_Descripcion { get; set; }
+
+    [NotMapped]
+    public string? Marc_Descripcion { get; set; }
+
+    [NotMapped]
+    public string? Cate_Descripcion { get; set; }
+
+    [NotMapped]
+    public string? Prov_Nombre { get; set; }
 
     public virtual ICollection<tbComprasDetalles> tbComprasDetalles { get; set; } = new List<tbComprasDetalles>();
 
