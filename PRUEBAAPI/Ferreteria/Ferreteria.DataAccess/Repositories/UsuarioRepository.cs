@@ -95,8 +95,8 @@ namespace Ferreteria.DataAccess.Repositories
         public RequestStatus Update(tbUsuarios item)
         {
             var parameter = new DynamicParameters();
-            parameter.Add("@Usua_Nombre", item.Usua_Nombre, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-            parameter.Add("@Usua_Clave", item.Usua_Clave, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameter.Add("@Usua_Id", item.Usua_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
+            parameter.Add("@Usua_Nombre", item.Usua_Nombre, System.Data.DbType.String, System.Data.ParameterDirection.Input);
             parameter.Add("@Empl_Id", item.Empl_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
             parameter.Add("@Role_Id", item.Role_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
             parameter.Add("@Usua_EsAdmin", item.Usua_EsAdmin, System.Data.DbType.Boolean, System.Data.ParameterDirection.Input);
@@ -120,6 +120,34 @@ namespace Ferreteria.DataAccess.Repositories
             var result = db.Execute(ScriptsDataBase.Usuario_Eliminar, parameter, commandType: System.Data.CommandType.StoredProcedure);
 
             string mensaje = (result == 0) ? "Error al eliminar" : "Eliminado correctamente";
+
+            return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+        }
+
+        public RequestStatus RestablecerClave(int usuarioId, string nuevaClave)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@Usua_Id", usuarioId, DbType.Int32, ParameterDirection.Input);
+            parameter.Add("@Usua_Clave", nuevaClave, DbType.String, ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Execute(ScriptsDataBase.RestablecerClave, parameter, commandType: CommandType.StoredProcedure);
+
+            string mensaje = (result == 0) ? "Error al restablecer la contraseña" : "Contraseña restablecida correctamente";
+
+            return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+        }
+
+        public RequestStatus ActivarDesactivarUsuario(tbUsuarios item)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@Usua_Id", item.Usua_Id, DbType.Int32, ParameterDirection.Input);
+            parameter.Add("@Usua_Estado", item.Usua_Estado, DbType.Boolean, ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Execute(ScriptsDataBase.Usuario_ActivarDesactivar, parameter, commandType: CommandType.StoredProcedure);
+
+            string mensaje = (result == 0) ? "Error al actualizar el estado" : "Estado actualizado correctamente";
 
             return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
         }

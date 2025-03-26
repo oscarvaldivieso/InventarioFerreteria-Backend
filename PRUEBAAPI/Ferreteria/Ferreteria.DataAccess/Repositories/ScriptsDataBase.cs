@@ -10,6 +10,9 @@ namespace Ferreteria.DataAccess.Repositories
     {
         #region Usuarios
         public static string IniciarSesion = "Acce.SP_Usuarios_InicioSesion";
+        public static string RestablecerClave = "Acce.SP_ReestablecerClave_Actualizar ";
+        public static string Usuario_ActivarDesactivar = "Acce.SP_UsuarioActivarDesactivar";
+
         #endregion
 
         #region Departamentos

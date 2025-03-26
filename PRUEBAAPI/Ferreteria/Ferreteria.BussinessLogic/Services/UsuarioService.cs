@@ -95,6 +95,34 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
+        public ServiceResult RestablecerClave(int usuarioId, string nuevaClave)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var response = _usuarioRepository.RestablecerClave(usuarioId, nuevaClave);
+                return result.Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult ActivarDesactivarUsuario(tbUsuarios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var response = _usuarioRepository.ActivarDesactivarUsuario(item);
+                return result.Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         #endregion Usuarios
     }
 }

@@ -69,5 +69,20 @@ namespace Ferreteria.Controllers
             var list = _usuarioService.BuscarUsuario(mapped);
             return Ok(list);
         }
+
+        [HttpPost("RestablecerClave")]
+        public IActionResult RestablecerClave([FromBody] RestablecerClaveViewModel item)
+        {
+            var response = _usuarioService.RestablecerClave(item.Usua_Id, item.NuevaClave);
+            return Ok(response);
+        }
+
+        [HttpPut("ActivarDesactivarUsuario")]
+        public IActionResult ActivarDesactivarUsuario([FromBody] UsuariosViewModel item)
+        {
+            var mapped = _mapper.Map<tbUsuarios>(item);
+            var response = _usuarioService.ActivarDesactivarUsuario(mapped);
+            return Ok(response);
+        }
     }
 }
