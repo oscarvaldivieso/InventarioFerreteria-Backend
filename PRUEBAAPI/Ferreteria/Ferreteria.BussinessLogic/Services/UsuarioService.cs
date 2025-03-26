@@ -95,12 +95,12 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public ServiceResult RestablecerClave(int usuarioId, string nuevaClave)
+        public ServiceResult RestablecerClave(tbUsuarios item)
         {
             var result = new ServiceResult();
             try
             {
-                var response = _usuarioRepository.RestablecerClave(usuarioId, nuevaClave);
+                var response = _usuarioRepository.RestablecerClave(item);
                 return result.Ok(response);
             }
             catch (Exception ex)
