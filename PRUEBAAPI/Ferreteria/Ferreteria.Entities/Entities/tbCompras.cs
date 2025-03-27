@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FerreteriaEntities.Entities;
@@ -28,6 +29,32 @@ public partial class tbCompras
     public DateTime? Feca_Modificacion { get; set; }
 
     public bool? Comp_Estado { get; set; }
+
+    [NotMapped]
+    public int? CpDe_Id { get; set; }
+
+    [NotMapped]
+    [Display(Name = "Producto")]
+    public int? Prod_Id { get; set; }
+
+    [NotMapped]
+    [Display(Name = "Cantidad")]
+    public int? CpDe_Cantidad { get; set; }
+
+    [NotMapped]
+    [Display(Name = "Precio")]
+    public double? CpDe_Precio { get; set; }
+
+    [NotMapped]
+    public bool? CpDe_Estado { get; set; }
+
+    [NotMapped]
+    [Display(Name = "Producto")]
+    public string? Prod_Descripcion { get; set; }
+
+    [NotMapped]
+    [Display(Name = "Proveedor")]
+    public string? Prov_Nombre { get; set; }
 
     public virtual tbProveedores Prov { get; set; }
 
