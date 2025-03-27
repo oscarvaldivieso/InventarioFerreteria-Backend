@@ -163,6 +163,7 @@ namespace Ferreteria.DataAccess.Repositories
         public static string PantallasPorRol_Actualizar = "Acce.SP_PantallaPorRol_Actualizar";
         public static string PantallasPorRol_Eliminar = "Acce.SP_PantallaPorRol_Eliminar";
         public static string PantallasPorRol_Buscar = "Acce.SP_PantallaPorRol_Buscar";
+        public static string PantallasPorRol_Menu = "Acce.SP_PantallasPorRol_Menu";
 
         #endregion PantallasPorRol
 

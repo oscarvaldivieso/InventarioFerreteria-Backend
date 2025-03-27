@@ -22,23 +22,15 @@ namespace Ferreteria.DataAccess.Repositories
         }
 
         // Método para iniciar sesión
-        public async Task<UsuarioLoginResponse?> IniciarSesion(string usuario, string contrasena)
+        public IEnumerable<tbUsuarios> IniciarSesion(tbUsuarios? item)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var parametros = new
-                {
-                    usuario,
-                    contrasena
-                };
+            var parameter = new DynamicParameters();
+            parameter.Add("@usuario", item.Usua_Nombre, DbType.String, ParameterDirection.Input);
+            parameter.Add("@contrasena", item.Usua_Clave, DbType.String, ParameterDirection.Input);
 
-                // Ejecuta el procedimiento almacenado y devuelve el resultado
-                return await connection.QueryFirstOrDefaultAsync<UsuarioLoginResponse>(
-                    ScriptsDataBase.IniciarSesion, // El nombre del procedimiento almacenado
-                    parametros,
-                    commandType: CommandType.StoredProcedure
-                );
-            }
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Query<tbUsuarios>(ScriptsDataBase.IniciarSesion, parameter, commandType: CommandType.StoredProcedure).ToList();
+            return result;
         }
 
         public tbUsuarios FindUsua(int? id)

@@ -1,4 +1,6 @@
-﻿namespace Ferreteria.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Ferreteria.Models
 {
     public class RolViewModel
     {
@@ -17,5 +19,11 @@
         public bool? Role_Estado { get; set; }
 
         public List<int> PantIds { get; set; }
+
+        [NotMapped]
+        public int? Pant_Id { get; set; }
+
+        [NotMapped]
+        public string Pant_Descripicion { get; set; }
     }
 }

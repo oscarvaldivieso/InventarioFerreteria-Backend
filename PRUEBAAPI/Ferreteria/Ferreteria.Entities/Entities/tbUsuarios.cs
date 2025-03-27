@@ -16,8 +16,10 @@ public partial class tbUsuarios
 
     public int Empl_Id { get; set; }
 
+
+
     [NotMapped]
-    public string Empl_NombreCompleto { get; set; }
+    public string? Empl_NombreCompleto { get; set; }
 
     public int Role_Id { get; set; }
 
@@ -35,6 +37,8 @@ public partial class tbUsuarios
     public DateTime? Feca_Modificacion { get; set; }
 
     public bool? Usua_Estado { get; set; }
+
+
 
     public virtual tbEmpleados Empl { get; set; }
 

@@ -1,4 +1,6 @@
-﻿using Ferreteria.BussinessLogic.Services;
+﻿using AutoMapper;
+using Ferreteria.BussinessLogic.Services;
+using Ferreteria.Models;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,11 +9,12 @@ namespace Ferreteria.Controllers
     public class LoginController : ControllerBase
     {
         private readonly UsuarioService _usuarioService;
+        private readonly IMapper _mapper;
 
-        public LoginController()
+        public LoginController(UsuarioService usuarioService, IMapper mapper)
         {
-            string connectionString = "Server = dbFerreteria.mssql.somee.com; Database = dbFerreteria; User Id= SOLANGRI69_SQLLogin_1; Password = Admin123ñ; TrustServerCertificate = True;"; // Pasa tu cadena de conexión aquí
-            _usuarioService = new UsuarioService(connectionString);
+            _usuarioService = usuarioService;
+            _mapper = mapper;
         }
 
         public class LoginRequest
@@ -20,18 +23,6 @@ namespace Ferreteria.Controllers
             public string Contrasena { get; set; }
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> IniciarSesion([FromBody] LoginRequest loginRequest)
-        {
-            // Se supone que LoginRequest tiene las propiedades Usuario y Contrasena
-            var usuario = await _usuarioService.ValidarLogin(loginRequest.Usuario, loginRequest.Contrasena);
-
-            if (usuario == null)
-            {
-                return Unauthorized("Credenciales inválidas");
-            }
-
-            return Ok(usuario);
-        }
+       
     }
 }

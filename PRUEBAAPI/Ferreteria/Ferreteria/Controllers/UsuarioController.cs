@@ -22,12 +22,12 @@ namespace Ferreteria.Controllers
             return View();
         }
 
-        [HttpPost("IniciarSesion")]
-        public IActionResult IniciarSesion([FromBody] UsuariosViewModel item)
+        [HttpPost("login")]
+        public IActionResult IniciarSesion([FromBody] LoginViewModel item)
         {
             var mapped = _mapper.Map<tbUsuarios>(item);
-            var login = _usuarioService.ValidarLogin(mapped.Usua_Nombre, mapped.Usua_Clave);
-            return Ok(login);
+            var list = _usuarioService.ValidarLogin(mapped);
+            return Ok(list);
         }
 
         [HttpGet("ListarUsuarios")]

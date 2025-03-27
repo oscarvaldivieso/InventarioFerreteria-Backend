@@ -80,6 +80,15 @@ namespace Ferreteria.Controllers
         }
 
 
+        [HttpPost("BuscarPantallas")]
+        public IActionResult PantallasPorRol([FromBody] RolViewModel item)
+        {
+            var mapped = _mapper.Map<tbRoles>(item);
+            var list = _accesoServices.PantallasPorRol(mapped);
+            return Ok(list);
+        }
+
+
 
     }
 }

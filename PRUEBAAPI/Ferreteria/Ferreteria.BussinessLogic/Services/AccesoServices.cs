@@ -88,6 +88,20 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
+        public ServiceResult PantallasPorRol(tbRoles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var pantallas = _rolRepository.PantallasPorRol(item);
+                return result.Ok(pantallas);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
         #endregion Rol
     }
 }

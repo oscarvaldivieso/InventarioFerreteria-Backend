@@ -165,7 +165,18 @@ namespace Ferreteria.DataAccess.Repositories
             }
         }
 
+        public IEnumerable<tbRoles> PantallasPorRol(tbRoles? item)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@Role_Id", item.Role_Id, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
 
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Query<tbRoles>(ScriptsDataBase.PantallasPorRol_Menu, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            return result;
+        }
+
+        
         public RequestStatus Insert(tbRoles item)
         {
             throw new NotImplementedException();

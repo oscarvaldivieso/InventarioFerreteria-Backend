@@ -19,9 +19,19 @@ namespace Ferreteria.BussinessLogic.Services
         }
 
         #region Usuarios
-        public async Task<UsuarioLoginResponse> ValidarLogin(string usuario, string contrasena)
+        public IEnumerable<tbUsuarios> ValidarLogin(tbUsuarios item)
         {
-            return await _usuarioRepository.IniciarSesion(usuario, contrasena);
+            var result = new ServiceResult();
+            try
+            {
+                var list = _usuarioRepository.IniciarSesion(item);
+                return list;
+            }
+            catch(Exception ex)
+            {
+                IEnumerable<tbUsuarios> usua = null;
+                return usua;
+            }
         }
 
         public IEnumerable<tbUsuarios> BuscarUsuario(tbUsuarios item)
