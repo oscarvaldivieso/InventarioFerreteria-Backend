@@ -143,17 +143,18 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public ServiceResult InsertCompra(tbCompras item)
+        public IEnumerable<tbCompras> InsertCompra(tbCompras item)
         {
             var result = new ServiceResult();
             try
             {
-                var insert = _compraRepository.InsertEncabezado(item);
-                return result.Ok(insert);
+                var insert = _compraRepository.InsertEncabezado(item).ToList();
+                return insert;
             }
             catch (Exception ex)
             {
-                return result.Error(ex.Message);
+                IEnumerable<tbCompras> comp = null;
+                return comp;
             }
         }
 
