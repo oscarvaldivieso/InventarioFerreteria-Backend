@@ -78,5 +78,14 @@ namespace Ferreteria.Controllers
             list = _mapper.Map<IEnumerable<tbCompras>>(list);
             return Ok(list);
         }
+
+        [HttpPost("BuscarFecha")]
+        public IActionResult FindFecha([FromBody] CompraViewModel item)
+        {
+            var mapped = _mapper.Map<tbCompras>(item);
+            var list = _compraServices.BuscarFecha(mapped);
+            list = _mapper.Map<IEnumerable<tbCompras>>(list);
+            return Ok(list);
+        }
     }
 }

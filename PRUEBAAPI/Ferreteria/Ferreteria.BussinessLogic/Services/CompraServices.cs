@@ -114,6 +114,21 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
+        public IEnumerable<tbCompras> BuscarFecha(tbCompras item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _compraRepository.FindFechas(item);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                IEnumerable<tbCompras> comp = null;
+                return comp;
+            }
+        }
+
         public IEnumerable<tbCompras> ListCompras()
         {
             try

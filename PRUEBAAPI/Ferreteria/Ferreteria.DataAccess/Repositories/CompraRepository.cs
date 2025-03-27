@@ -34,6 +34,18 @@ namespace Ferreteria.DataAccess.Repositories
             return result;
         }
 
+        public IEnumerable<tbCompras> FindFechas(tbCompras? item)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@FechaInicio", item.Fecha_Inicio, System.Data.DbType.Date, System.Data.ParameterDirection.Input);
+            parameter.Add("@FechaFin", item.Fecha_Fin, System.Data.DbType.Date, System.Data.ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Query<tbCompras>(ScriptsDataBase.CompraFecha_Listar, parameter, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            return result;
+        }
+
         public RequestStatus Insert(tbCompras item)
         {
             throw new NotImplementedException();

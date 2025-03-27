@@ -2,16 +2,22 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FerreteriaEntities.Entities;
 
 public partial class tbCompras
 {
+    [NotMapped]
+    public DateOnly? Fecha_Inicio { get; set; }
+
+    [NotMapped]
+    public DateOnly? Fecha_Fin { get; set; }
     public int Comp_Id { get; set; }
 
     public int Prov_Id { get; set; }
 
-    public DateOnly Comp_Fecha { get; set; }
+    public DateTime Comp_Fecha { get; set; }
 
     public int Usua_Creacion { get; set; }
 

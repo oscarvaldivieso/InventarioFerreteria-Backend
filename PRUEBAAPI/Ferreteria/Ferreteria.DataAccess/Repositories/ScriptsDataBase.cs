@@ -175,6 +175,7 @@ namespace Ferreteria.DataAccess.Repositories
         public static string CompraDetalle_Actualizar = "Comp.SP_CompraDetalle_Actualizar";
         public static string Compra_Eliminar = "Comp.SP_Compra_Eliminar";
         public static string Compra_Buscar = "Comp.SP_Compra_Buscar";
+        public static string CompraFecha_Listar = "Comp.SP_CompraReporte_Listar";
 
         #endregion Compras
     }
