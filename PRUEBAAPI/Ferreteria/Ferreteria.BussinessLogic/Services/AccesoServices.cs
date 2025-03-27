@@ -88,17 +88,18 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public ServiceResult PantallasPorRol(tbRoles item)
+        public IEnumerable<tbRoles> PantallasPorRol(tbRoles item)
         {
             var result = new ServiceResult();
             try
             {
                 var pantallas = _rolRepository.PantallasPorRol(item);
-                return result.Ok(pantallas);
+                return pantallas;
             }
             catch (Exception ex)
             {
-                return result.Error(ex.Message);
+                IEnumerable<tbRoles> roles = null;
+                return roles;
             }
         }
 
