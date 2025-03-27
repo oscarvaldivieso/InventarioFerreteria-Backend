@@ -25,6 +25,7 @@ namespace Ferreteria.Extensions
             CreateMap<tbRoles, RolViewModel>().ReverseMap();
             CreateMap<tbCompras, CompraViewModel>().ReverseMap();
             CreateMap<tbComprasDetalles, CompraDetalleViewModel>().ReverseMap();
+            CreateMap<tbUsuarios, LoginViewModel>().ReverseMap();
         }
     }
 }
