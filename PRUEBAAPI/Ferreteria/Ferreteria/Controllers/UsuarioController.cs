@@ -78,11 +78,19 @@ namespace Ferreteria.Controllers
             return Ok(response);
         }
 
-        [HttpPut("ActivarDesactivarUsuario")]
-        public IActionResult ActivarDesactivarUsuario([FromBody] UsuariosViewModel item)
+        [HttpPut("ActivarUsuario")]
+        public IActionResult ActivarUsuario([FromBody] UsuariosViewModel item)
         {
             var mapped = _mapper.Map<tbUsuarios>(item);
-            var response = _usuarioService.ActivarDesactivarUsuario(mapped);
+            var response = _usuarioService.ActivarUsuario(mapped);
+            return Ok(response);
+        }
+
+        [HttpPut("DesactivarUsuario")]
+        public IActionResult DesactivarUsuario([FromBody] UsuariosViewModel item)
+        {
+            var mapped = _mapper.Map<tbUsuarios>(item);
+            var response = _usuarioService.ActivarUsuario(mapped);
             return Ok(response);
         }
     }

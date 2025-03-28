@@ -130,14 +130,27 @@ namespace Ferreteria.DataAccess.Repositories
             return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
         }
 
-        public RequestStatus ActivarDesactivarUsuario(tbUsuarios item)
+        public RequestStatus UsuarioActivar(tbUsuarios item)
         {
             var parameter = new DynamicParameters();
             parameter.Add("@Usua_Id", item.Usua_Id, DbType.Int32, ParameterDirection.Input);
-            parameter.Add("@Usua_Estado", item.Usua_Estado, DbType.Boolean, ParameterDirection.Input);
 
             using var db = new SqlConnection(FerreteriaContext.ConnectionString);
-            var result = db.Execute(ScriptsDataBase.Usuario_ActivarDesactivar, parameter, commandType: CommandType.StoredProcedure);
+            var result = db.Execute(ScriptsDataBase.Usuario_Activar, parameter, commandType: CommandType.StoredProcedure);
+
+            string mensaje = (result == 0) ? "Error al actualizar el estado" : "Estado actualizado correctamente";
+
+            return new RequestStatus { CodeStatus = result, MessageStatus = mensaje };
+        }
+
+
+        public RequestStatus UsuarioDesactivar(tbUsuarios item)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@Usua_Id", item.Usua_Id, DbType.Int32, ParameterDirection.Input);
+
+            using var db = new SqlConnection(FerreteriaContext.ConnectionString);
+            var result = db.Execute(ScriptsDataBase.Usuario_Desactivar, parameter, commandType: CommandType.StoredProcedure);
 
             string mensaje = (result == 0) ? "Error al actualizar el estado" : "Estado actualizado correctamente";
 

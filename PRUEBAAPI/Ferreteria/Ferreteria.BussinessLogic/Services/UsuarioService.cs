@@ -119,12 +119,26 @@ namespace Ferreteria.BussinessLogic.Services
             }
         }
 
-        public ServiceResult ActivarDesactivarUsuario(tbUsuarios item)
+        public ServiceResult ActivarUsuario(tbUsuarios item)
         {
             var result = new ServiceResult();
             try
             {
-                var response = _usuarioRepository.ActivarDesactivarUsuario(item);
+                var response = _usuarioRepository.UsuarioActivar(item);
+                return result.Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DesactivarUsuario(tbUsuarios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var response = _usuarioRepository.UsuarioDesactivar(item);
                 return result.Ok(response);
             }
             catch (Exception ex)
