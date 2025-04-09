@@ -36,7 +36,7 @@ namespace Ferreteria.DataAccess.Repositories
         public RequestStatus Insert(tbClientes item)
         {
             var parameter = new DynamicParameters();
-            parameter.Add("@Clie_DNI", item.Clie_DNI, System.Data.DbType.String, System.Data.ParameterDirection.Input);
+            parameter.Add("@Clie_Identidad", item.Clie_DNI, System.Data.DbType.String, System.Data.ParameterDirection.Input);
             parameter.Add("@Clie_Nombre", item.Clie_Nombre, System.Data.DbType.String, System.Data.ParameterDirection.Input);
             parameter.Add("@Clie_Apellido", item.Clie_Apellido, System.Data.DbType.String, System.Data.ParameterDirection.Input);
             parameter.Add("@Clie_Sexo", item.Clie_Sexo, System.Data.DbType.String, System.Data.ParameterDirection.Input);
